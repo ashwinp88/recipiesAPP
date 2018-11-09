@@ -9,7 +9,6 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { faThumbsDown } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-logon',
@@ -33,7 +32,7 @@ export class LogonComponent implements OnInit, OnDestroy {
     this.logonForm = new FormGroup(
       {
         'usr': new FormControl('', [Validators.required, Validators.minLength(6)]),
-        'password': new FormControl( { value: '', disabled: true } , Validators.required),
+        'password': new FormControl({ value: '', disabled: true }, Validators.required),
       }
     );
     this.userValidatorSubscription = this.logonForm.get('usr').statusChanges.subscribe(
@@ -53,30 +52,30 @@ export class LogonComponent implements OnInit, OnDestroy {
 
   onLogon() {
     this.authService.logon(this.logonForm.get('usr').value,
-                            this.logonForm.get('password').value).subscribe(
-      (value) => {
-        this.authService.uName = value['userName'];
-        this.authService.authToken = value['access_token'];
-        this.authService.isAuthorized = true;
-        this.router.navigate(['/recipies']);
-      },
-      (errorValue: HttpErrorResponse) => {
-        if (errorValue['error']) {
-          if (errorValue['error']['error_description']) {
-            this.errorMessage =  errorValue['error']['error_description'];
+      this.logonForm.get('password').value).subscribe(
+        (value) => {
+          this.authService.uName = value['userName'];
+          this.authService.authToken = value['access_token'];
+          this.authService.isAuthorized = true;
+          this.router.navigate(['/recipies']);
+        },
+        (errorValue: HttpErrorResponse) => {
+          if (errorValue['error']) {
+            if (errorValue['error']['error_description']) {
+              this.errorMessage = errorValue['error']['error_description'];
+            }
+          } else {
+            this.errorMessage = errorValue['message'];
           }
-        } else {
-          this.errorMessage = errorValue['message'];
+          this.openErrorModal();
         }
-        this.openErrorModal();
-      }
-    );
+      );
   }
 
-   openErrorModal() {
-   const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
-   modalRef.componentInstance.modalTitle = 'Error Logging in';
-   modalRef.componentInstance.modalContent = this.errorMessage;
-   modalRef.componentInstance.modalBtnCancelVisible = false;
+  openErrorModal() {
+    const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
+    modalRef.componentInstance.modalTitle = 'Error Logging in';
+    modalRef.componentInstance.modalContent = this.errorMessage;
+    modalRef.componentInstance.modalBtnCancelVisible = false;
   }
 }

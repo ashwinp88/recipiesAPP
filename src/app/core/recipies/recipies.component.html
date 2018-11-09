@@ -1,8 +1,38 @@
-<div class="row m-2">
-    <div class="col-md-4">
-        <app-recipie-list></app-recipie-list>  
-      </div>
-      <div class="col">
-        <app-recipie-detail></app-recipie-detail>
-      </div>
+<div class="container-fluid">
+    <div class="navbar navbar-expand-md text-white">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse">
+            <form class="w-100">
+                <div class="d-flex flex-row">
+                    <div class="input-group m-1 w-25">
+                        <div class="input-group-prepend">
+                            <fa-icon [icon]="faSearch" class="input-group-text"></fa-icon>
+                        </div>
+                        <input type="text" class="form-control bg-transparent text-white" placeholder="Search for" id="search" name="search">
+                    </div>
+                    <div ngbDropdown class="dropdown m-1">
+                        <button ngbDropdownToggle class="btn btn-outline-light dropdown-toggle" type="button">
+                          <span class="caret"></span>Include in search results
+                      </button>
+                        <ul ngbDropdownMenu class="dropdown-menu">
+                            <li *ngFor="let lookInItem of lookInItems" class="dropdown-item">
+                                <input type="checkbox" [value]="lookInItem">
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline-light m-1" type="button">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row m-2">
+        <div class="col-md-4">
+            <app-recipie-list></app-recipie-list>
+        </div>
+        <div class="col">
+            <app-recipie-detail></app-recipie-detail>
+        </div>
+    </div>
 </div>
