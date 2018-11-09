@@ -1,0 +1,15 @@
+  <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ this.modalTitle }}
+        </h4>
+    </div>
+    <div class="modal-body">
+      {{ this.modalContent }}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">{{ this.modalOkBtnCaption }}</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()" *ngIf="this.modalBtnCancelVisible" >{{ this.modalCancelButtonCaption }}</button>
+    </div>
+  </div>
+

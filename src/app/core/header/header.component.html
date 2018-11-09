@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-sm navbar-dark translucent">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">
+            <img src="../../assets/apple/apple 256.png" style="height: 40px;"> HyngryChef.com
+        </a>
+    </div>
+    <button class="navbar-toggler">
+             <fa-icon [icon] = "faBars" class="text-white"></fa-icon>
+      </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" *ngIf="this.authService.isAuthorized">
+                <a class="nav-link text-white" href="#">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                    {{ this.authService.uName }}'s account
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">
+                    <fa-icon [icon]="faUtensils"></fa-icon>
+                    Recipies
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

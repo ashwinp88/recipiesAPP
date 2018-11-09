@@ -1,0 +1,17 @@
+.bg {
+    /* Set rules to fill background */
+    background-image: url('../assets/staticback.jpg');
+    height: 100%;
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}

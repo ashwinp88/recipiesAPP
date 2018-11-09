@@ -1,0 +1,51 @@
+<div class="container" style="height: 100%;">
+    <div style="height:25%"></div>
+    <div class="row">
+        <div class="col-sm-7 col-md-5">
+            <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
+                <div class="input-group" [ngClass]="{'mb-3': this.signupForm.get('usr').valid || this.signupForm.get('usr').untouched}">
+                    <div class="input-group-prepend">
+                        <fa-icon [icon]="faUser" class="input-group-text"></fa-icon>
+                    </div>
+                    <input type="text" class="form-control bg-transparent text-white" placeholder="User name" id="usr" name="usr" formControlName="usr" (onchange)="this.errorMessage=''">
+                </div>
+                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.signupForm.get('usr').valid && this.signupForm.get('usr').touched">
+                    {{ this.formValidators.getErrorForControl('usr', signupForm) }}
+                </label>
+                <div class="input-group" [ngClass]="{'mb-3': this.signupForm.get('email').valid || this.signupForm.get('email').untouched}">
+                    <div class="input-group-prepend">
+                        <fa-icon [icon]="faEnvelopeOpen" class="input-group-text"></fa-icon>
+                    </div>
+                    <input type="text" class="form-control bg-transparent text-white" placeholder="example@example.com" id="email" name="email" formControlName="email" (onchange)="this.errorMessage=''">
+                </div>
+                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.signupForm.get('email').valid && this.signupForm.get('email').touched">
+                    {{ this.formValidators.getErrorForControl('email', signupForm) }}
+                </label>
+                <div class="input-group" [ngClass]="{'mb-3': this.signupForm.get('password').valid || this.signupForm.get('password').untouched}">
+                    <div class="input-group-prepend">
+                        <fa-icon [icon]="faLock" class="input-group-text"></fa-icon>
+                    </div>
+                    <input type="password" class="form-control bg-transparent text-white" placeholder="Password" id="pwd" name="password" formControlName="password">
+                </div>
+                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.signupForm.get('password').valid && this.signupForm.get('password').touched">
+                    {{ this.formValidators.getErrorForControl('password', signupForm) }} </label>
+                <div class="input-group" [ngClass]="{'mb-3': this.signupForm.get('confirmPassword').valid || this.signupForm.get('confirmPassword').untouched}">
+                    <div class="input-group-prepend">
+                        <fa-icon [icon]="faLock" class="input-group-text"></fa-icon>
+                    </div>
+                    <input type="password" class="form-control bg-transparent text-white" placeholder="Confirm password" id="cnfPwd" name="confirmPassword" formControlName="confirmPassword">
+                </div>
+                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.signupForm.get('confirmPassword').valid && this.signupForm.get('confirmPassword').touched">
+                    {{ this.formValidators.getErrorForControl('confirmPassword', signupForm) }}</label>
+                <div class="row">
+                    <div class="col-sm-5 mb-3">
+                        <button type="button" class="btn btn-outline-light btn-block" [routerLink]="['/logon']">Login</button>
+                    </div>
+                    <div class="col-sm-7 mb-3">
+                        <button type="submit" [disabled]="!this.signupForm.valid && !this.signingUp" class="btn btn-outline-light btn-block">Reister</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
