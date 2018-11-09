@@ -6,6 +6,7 @@ import { RecipiesComponent } from './recipies.component';
 import { RecipieListComponent } from './recipie-list/recipie-list.component';
 import { RecipieDetailComponent } from './recipie-detail/recipie-detail.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgbModule
   ]
 })
 export class RecipiesModule { }

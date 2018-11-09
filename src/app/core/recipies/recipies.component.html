@@ -1,8 +1,8 @@
-<div class="container-fluid">
-    <div class="navbar navbar-expand-md text-white">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<div>
+    <div class="navbar navbar-expand-md bg-transparent">
+        <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <fa-icon [icon] = "faBars" class="text-white"></fa-icon>
+        </button>
         <div class="collapse navbar-collapse">
             <form class="w-100">
                 <div class="d-flex flex-row">
@@ -10,19 +10,19 @@
                         <div class="input-group-prepend">
                             <fa-icon [icon]="faSearch" class="input-group-text"></fa-icon>
                         </div>
-                        <input type="text" class="form-control bg-transparent text-white" placeholder="Search for" id="search" name="search">
+                        <input type="text" class="form-control" placeholder="Search for" id="search" name="search">
                     </div>
-                    <div ngbDropdown class="dropdown m-1">
-                        <button ngbDropdownToggle class="btn btn-outline-light dropdown-toggle" type="button">
-                          <span class="caret"></span>Include in search results
+                    <div ngbDropdown class="m-1" #dropDown="ngbDropdown">
+                        <button ngbDropdownToggle class="btn btn-light dropdown-toggle" type="button" (mouseover)="dropDown.open()">
+                          {{ this.lookInCaption }}
                       </button>
-                        <ul ngbDropdownMenu class="dropdown-menu">
+                        <ul ngbDropdownMenu>
                             <li *ngFor="let lookInItem of lookInItems" class="dropdown-item">
-                                <input type="checkbox" [value]="lookInItem">
+                                <input #val type="checkbox" [value]="lookInItem" (change)="this.onLookInChange(val, $event['target']['checked'])"> {{ lookInItem }}
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-outline-light m-1" type="button">Search</button>
+                    <button class="btn btn-light m-1" type="button">Search</button>
                 </div>
             </form>
         </div>
