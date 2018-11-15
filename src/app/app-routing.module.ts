@@ -7,8 +7,7 @@ import { RecipiesComponent } from './core/recipies/recipies.component';
 const routes: Routes = [
   { path: '', redirectTo: '\logon', pathMatch: 'full' },
   { path: 'logon', component: LogonComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'recipies', component: RecipiesComponent }
+  { path: 'signup', component: SignupComponent }
 ];
 
 @NgModule({
