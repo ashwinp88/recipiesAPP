@@ -1,0 +1,7 @@
+.form-control-input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid black;
+    width: 100%    
+}

@@ -1,3 +1,48 @@
-<p>
-  recipie-create works!
-</p>
+<div class="bg-white container rounded p-3" style="overflow-y:scroll;max-height: 800px">
+    <form>
+        <mat-form-field class="w-100">
+            <h2><input matInput placeholder="Recipe title"></h2>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <textarea matInput placeholder="A brief description of the recipe"></textarea>
+        </mat-form-field>
+        <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">
+        <mat-form-field class="w-100">
+            <input type="url" matInput placeholder="url for the recipe's main image" [(ngModel)]="this.imageLocation"
+                name="imageloc">
+        </mat-form-field>
+        &nbsp;
+        <p for="" style="color:grey">Ingredients</p>
+        <app-recipie-ingredient *ngFor="let i of this.ingredients"></app-recipie-ingredient>
+        <button type="button" class="btn btn-primary" (click)="this.ingredients.push('a')">
+            Add Ingredient
+        </button>
+
+
+       <!--  <div class="Card">
+            <div class="card-header">
+                Ingredients
+            </div>
+            <div class="card-body">
+             
+
+            </div>
+            <div class="card-footer">
+               
+            </div>
+        </div> -->
+
+
+        <!--  <div class="row">
+            <div class="col-sm-6">
+               
+            </div>
+            <div class="col-sm-6">
+                
+                <mat-form-field class="w-80">
+                    <input matInput placeholder="Choose a main image">
+                </mat-form-field>
+            </div>
+        </div> -->
+    </form>
+</div>

@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recipie-create.component.css']
 })
 export class RecipieCreateComponent implements OnInit {
-
+  imageLocation: string;
+  ingredients: string[];
   constructor() { }
 
   ngOnInit() {
+    this.imageLocation = '';
+    this.ingredients = ['a', 'b'] ;
   }
 
 }

@@ -1,22 +1,44 @@
-<nav class="navbar navbar-expand-sm navbar-dark translucent">
+<nav class="navbar navbar-expand-md navbar-dark translucent">
     <div class="navbar-header">
         <a href="#" class="navbar-brand">
             <img src="../../assets/apple/apple 256.png" style="height: 40px;"> HyngryChef.com
         </a>
     </div>
+
     <button class="navbar-toggler">
-             <fa-icon [icon] = "faBars" class="text-white"></fa-icon>
-      </button>
-    <div class="collapse navbar-collapse">
+        <fa-icon [icon]="faBars" class="text-white"></fa-icon>
+    </button>
+    <div class="collapse navbar-collapse show">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+                <div class="d-flex flex-row">
+                    <input type="text" class="form-control bg-transparent text-white mx-1" placeholder="Search for" id="search"
+                        name="search">
+                    <div ngbDropdown #dropDown="ngbDropdown">
+                        <button ngbDropdownToggle class="btn btn-outline-light dropdown-toggle mx-1" type="button">
+                            Include
+                        </button>
+                        <ul ngbDropdownMenu>
+                            <li *ngFor="let lookInItem of lookInItems" class="dropdown-item">
+                                <input #val type="checkbox" [value]="lookInItem" (change)="this.onLookInChange(val, $event['target']['checked'])">
+                                {{ lookInItem }}
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline-light mx-1" type="button">
+                        <fa-icon [icon]="faSearch"></fa-icon>
+                    </button>
+                </div>
+            </li>
+
             <li class="nav-item" *ngIf="this.authService.isAuthorized">
-                <a class="nav-link text-white" href="#">
+                <a class="nav-link text-white">
                     <fa-icon [icon]="faUser"></fa-icon>
                     {{ this.authService.uName }}'s account
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white" href="#">
+                <a class="nav-link text-white">
                     <fa-icon [icon]="faUtensils"></fa-icon>
                     Recipies
                 </a>

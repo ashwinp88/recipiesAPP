@@ -1,31 +1,5 @@
-<div>
-    <div class="navbar navbar-expand-md bg-transparent">
-        <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <fa-icon [icon] = "faBars" class="text-white"></fa-icon>
-        </button>
-        <div class="collapse navbar-collapse">
-            <form class="w-100">
-                <div class="d-flex flex-row">
-                    <div class="input-group m-1 w-25">
-                        <div class="input-group-prepend">
-                            <fa-icon [icon]="faSearch" class="input-group-text"></fa-icon>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Search for" id="search" name="search">
-                    </div>
-                    <div ngbDropdown class="m-1" #dropDown="ngbDropdown">
-                        <button ngbDropdownToggle class="btn btn-light dropdown-toggle" type="button" (mouseover)="dropDown.open()">
-                          {{ this.lookInCaption }}
-                      </button>
-                        <ul ngbDropdownMenu>
-                            <li *ngFor="let lookInItem of lookInItems" class="dropdown-item">
-                                <input #val type="checkbox" [value]="lookInItem" (change)="this.onLookInChange(val, $event['target']['checked'])"> {{ lookInItem }}
-                            </li>
-                        </ul>
-                    </div>
-                    <button class="btn btn-light m-1" type="button">Search</button>
-                </div>
-            </form>
-        </div>
+<div class="container-fluid">
+    <div class="h-100 w-100">      
+        <router-outlet></router-outlet>
     </div>
-  <router-outlet></router-outlet>
 </div>

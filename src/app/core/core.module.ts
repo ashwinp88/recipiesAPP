@@ -5,6 +5,7 @@ import { LogonComponent } from './logon/logon.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +28,8 @@ import { RecipiesModule } from './recipies/recipies.module';
     AppRoutingModule,
     FontAwesomeModule,
     NgbModule,
-    RecipiesModule
+    RecipiesModule,
+    BrowserAnimationsModule
   ],
   exports: [
     HeaderComponent, SignupComponent, LogonComponent
