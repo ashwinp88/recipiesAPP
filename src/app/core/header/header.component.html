@@ -10,35 +10,39 @@
     </button>
     <div class="collapse navbar-collapse show">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item ">
-                <div class="d-flex flex-row">
+            <li class="nav-item" *ngIf="this.isRecipiesPath$ | async" >
+                <div class="d-flex">
                     <input type="text" class="form-control bg-transparent text-white mx-1" placeholder="Search for" id="search"
                         name="search">
                     <div ngbDropdown #dropDown="ngbDropdown">
                         <button ngbDropdownToggle class="btn btn-outline-light dropdown-toggle mx-1" type="button">
                             Include
                         </button>
-                        <ul ngbDropdownMenu>
-                            <li *ngFor="let lookInItem of lookInItems" class="dropdown-item">
+                        <div ngbDropdownMenu style="position: absolute">
+                            <button type="button" *ngFor="let lookInItem of lookInItems" class="dropdown-item" (click)="this.onClickMenuItem($event, val)">
                                 <input #val type="checkbox" [value]="lookInItem" (change)="this.onLookInChange(val, $event['target']['checked'])">
-                                {{ lookInItem }}
-                            </li>
-                        </ul>
+                                &nbsp; {{ lookInItem }}                               
+                            </button>
+                        </div>
                     </div>
                     <button class="btn btn-outline-light mx-1" type="button">
                         <fa-icon [icon]="faSearch"></fa-icon>
                     </button>
                 </div>
             </li>
-
+            <li class="nav-item" *ngIf="(this.isRecipiesPath$ | async) && this.authService.isAuthorized">
+                <a class="nav-link text-white mx-1" [routerLink]="['/recipies','new']">
+                    <fa-icon [icon]="faPlus"></fa-icon> Contribute a recipe
+                </a>
+            </li>
             <li class="nav-item" *ngIf="this.authService.isAuthorized">
-                <a class="nav-link text-white">
+                <a class="nav-link text-white mx-1">
                     <fa-icon [icon]="faUser"></fa-icon>
                     {{ this.authService.uName }}'s account
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white">
+                <a class="nav-link text-white mx-1" [routerLink]="['/recipies']">
                     <fa-icon [icon]="faUtensils"></fa-icon>
                     Recipies
                 </a>

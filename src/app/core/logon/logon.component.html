@@ -1,13 +1,13 @@
 <div class="container" style="height: 100%;">
-    <div style="height:25%"></div>
+    <div style="min-height: 200px"></div>
     <div class="row">
-        <div class="col-sm-7 col-md-5">
+        <div class="col-md-7">
             <form [formGroup]="logonForm" (ngSubmit)="onLogon()">
                 <div class="input-group" [ngClass]="{'mb-3': this.logonForm.get('usr').valid || this.logonForm.get('usr').untouched}">
                     <div class="input-group-prepend">
                         <fa-icon [icon]="faUser" class="input-group-text"></fa-icon>
                     </div>
-                    <input type="text" class="form-control bg-transparent text-white" placeholder="example@example.com"
+                    <input type="text" class="form-control bg-transparent text-white" placeholder="username"
                         id="usr" name="username" formControlName="usr" (onchange)="this.errorMessage=''">
                 </div>
                 <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.logonForm.get('usr').valid && this.logonForm.get('usr').touched">
@@ -33,7 +33,5 @@
                 </div>
             </form>
         </div>
-
     </div>
-
 </div>
