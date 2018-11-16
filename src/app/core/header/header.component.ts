@@ -5,6 +5,9 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'src/app/shared/auth-service.service';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-header',
@@ -21,13 +24,22 @@ export class HeaderComponent implements OnInit {
   lookInCaption: string;
   selectedItems: string[];
   @ViewChild('dropDown') 'dropDown': NgbDropdown;
-
+  isRecipiesPath$: Observable<boolean>;
   constructor(public authService: AuthService, public activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.lookInItems = ['Author', 'Description', 'Ingredients', 'Content'];
     this.lookInCaption = 'Include';
     this.selectedItems = [];
+    console.log(this.activeRoute);
+    if (this.activeRoute.firstChild != null) {
+      this.activeRoute.firstChild.url.subscribe(
+        (value) => console.log(value)
+      );
+    }
+    /* this.isRecipiesPath$ = this.activeRoute.firstChild.url.
+                            pipe(map(url => url[0].path)).
+                            pipe(map(path => path === '')); */
   }
 
   onLookInChange(elem: HTMLInputElement, checked: boolean) {
@@ -41,6 +53,7 @@ export class HeaderComponent implements OnInit {
       this.lookInCaption = `Looking in ${this.selectedItems.toString()}`;
     } else {
       this.lookInCaption = 'Include in search results';
+      /* console.log(this.isRecipiesPath$); */
     }
     console.log(this.activeRoute);
   }
