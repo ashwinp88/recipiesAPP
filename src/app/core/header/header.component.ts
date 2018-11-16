@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   selectedItems: string[];
   @ViewChild('dropDown') 'dropDown': NgbDropdown;
   isRecipiesPath$: Observable<boolean>;
+  firstChild$: Observable<ActivatedRoute>;
   constructor(public authService: AuthService, public activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
@@ -32,6 +33,7 @@ export class HeaderComponent implements OnInit {
     this.lookInCaption = 'Include';
     this.selectedItems = [];
     console.log(this.activeRoute);
+    
     if (this.activeRoute.firstChild != null) {
       this.activeRoute.firstChild.url.subscribe(
         (value) => console.log(value)
