@@ -14,6 +14,7 @@ import { AuthService } from '../shared/auth-service.service';
 import { ModalOkCancelComponent } from './modal-ok-cancel/modal-ok-cancel.component';
 import { RecipiesModule } from './recipies/recipies.module';
 import { AuthGuard } from '../shared/auth.guard';
+import { DataService } from '../shared/data.service';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,9 @@ import { AuthGuard } from '../shared/auth.guard';
     BrowserAnimationsModule
   ],
   exports: [
-    HeaderComponent, SignupComponent, LogonComponent
+    HeaderComponent, SignupComponent, LogonComponent, NgbModule
   ],
-  providers: [AuthService, NgbActiveModal, AuthGuard],
+  providers: [AuthService, NgbActiveModal, AuthGuard, DataService],
   entryComponents: [ModalOkCancelComponent]
 })
 export class CoreModule { }

@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="bg-white container-fluid rounded py-1 mt-3">
+    <form>
+      <div class="d-flex">
+          <input #ing type="text" class="form-control m-3" placeholder="Ingredient name">
+          <button type="button" class="btn btn-outline-primary m-3" (click)="this.onAddIngredient(ing.value)"> 
+              <fa-icon [icon]="faPlus"></fa-icon>
+              Add to file</button>
+      </div>    
+    </form>  
+  </div>
+  
+  <div class="bg-white container-fluid rounded py-1 mt-3">
+      <form>
+        <div class="d-flex">
+            <input type="text" class="form-control m-3" placeholder="Search available ingredients">
+            <button type="button" class="btn btn-outline-primary m-3">
+              <fa-icon [icon]="faSearch"></fa-icon>              
+            </button>
+        </div>    
+      </form>  
+    </div>
+</div>
+

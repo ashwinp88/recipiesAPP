@@ -29,20 +29,20 @@
                         <fa-icon [icon]="faSearch"></fa-icon>
                     </button>
                 </div>
-            </li>
+            </li>            
             <li class="nav-item" *ngIf="(this.isRecipiesPath$ | async) && this.authService.isAuthorized">
-                <a class="nav-link text-white mx-1" [routerLink]="['/recipies','new']">
+                <a class="nav-link text-white mx-1" [routerLink]="['/recipes','new']">
                     <fa-icon [icon]="faPlus"></fa-icon> Contribute a recipe
                 </a>
             </li>
             <li class="nav-item" *ngIf="this.authService.isAuthorized">
-                <a class="nav-link text-white mx-1">
+                <a class="nav-link text-white mx-1" [routerLink]="['/recipes','myRecipes']">
                     <fa-icon [icon]="faUser"></fa-icon>
                     {{ this.authService.uName }}'s account
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white mx-1" [routerLink]="['/recipies']">
+                <a class="nav-link text-white mx-1" [routerLink]="['/recipes']">
                     <fa-icon [icon]="faUtensils"></fa-icon>
                     Recipies
                 </a>

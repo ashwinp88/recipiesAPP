@@ -22,7 +22,7 @@ export class AuthService {
   logon(usr: string, password: string) {
     const loginData = `username=${encodeURIComponent(usr)}&password=${encodeURIComponent(password)}&grant_type=password`;
     const httpHeader: HttpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded' });
-    return this.httpClient.post(this.APIUrl + '/Token', loginData, {headers: httpHeader});
+    return this.httpClient.post(this.APIUrl + '/Token', loginData, { headers: httpHeader });
   }
 
 }

@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     this.isRecipiesPath$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).pipe(
                               map(navigation => navigation['url'])
                             ).pipe(
-                              map(url => url.toString().includes('recipies'))
+                              map(url => url.toString().includes('recipes'))
                             );
   }
 

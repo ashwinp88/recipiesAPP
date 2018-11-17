@@ -14,6 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RecipieIngredientComponent } from './recipie-ingredient/recipie-ingredient.component';
 import { RecipieStepComponent } from './recipie-step/recipie-step.component';
+import { MyRecipiesComponent } from './my-recipies/my-recipies.component';
+import { AddIngredientComponent } from './my-recipies/adminFunctions/add-ingredient/add-ingredient.component';
+import { AddUnitOfMeasureComponent } from './my-recipies/adminFunctions/add-unit-of-measure/add-unit-of-measure.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,10 @@ import { RecipieStepComponent } from './recipie-step/recipie-step.component';
     RecipieCreateComponent,
     RecipiesSearchComponent,
     RecipieIngredientComponent,
-    RecipieStepComponent],
+    RecipieStepComponent,
+    MyRecipiesComponent,
+    AddIngredientComponent,
+    AddUnitOfMeasureComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,7 +38,8 @@ import { RecipieStepComponent } from './recipie-step/recipie-step.component';
     RecipiesRoutingModule,
     MatFormFieldModule,
     MatInputModule,
-    MatGridListModule
+    MatGridListModule,
+    NgbModule
   ]
 })
 export class RecipiesModule { }
