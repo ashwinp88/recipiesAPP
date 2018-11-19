@@ -21,4 +21,14 @@ export class DataService {
     const postBody = { 'Description': ingredient };
     return this.httpClient.post(this.APIUrl + '/api/Ingredients', postBody, { headers: httpHeader });
   }
+
+  getIngredientsByName(ingredient: string) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    return this.httpClient.get(`${this.APIUrl}'/api/Ingredients/getIngredientsByDescription/${ingredient}`, { headers: httpHeader });
+  }
 }
