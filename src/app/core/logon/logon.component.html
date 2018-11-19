@@ -2,7 +2,7 @@
     <div style="min-height: 200px"></div>
     <div class="row">
         <div class="col-md-7">
-            <form [formGroup]="logonForm" (ngSubmit)="onLogon()">
+            <form [formGroup]="logonForm" (ngSubmit)="onLogon($event)">
                 <div class="input-group" [ngClass]="{'mb-3': this.logonForm.get('usr').valid || this.logonForm.get('usr').untouched}">
                     <div class="input-group-prepend">
                         <fa-icon [icon]="faUser" class="input-group-text"></fa-icon>

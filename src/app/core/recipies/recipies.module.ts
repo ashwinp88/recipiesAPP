@@ -18,6 +18,7 @@ import { MyRecipiesComponent } from './my-recipies/my-recipies.component';
 import { AddIngredientComponent } from './my-recipies/adminFunctions/add-ingredient/add-ingredient.component';
 import { AddUnitOfMeasureComponent } from './my-recipies/adminFunctions/add-unit-of-measure/add-unit-of-measure.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditIngredientComponent } from './my-recipies/adminFunctions/edit-ingredient/edit-ingredient.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RecipieStepComponent,
     MyRecipiesComponent,
     AddIngredientComponent,
-    AddUnitOfMeasureComponent],
+    AddUnitOfMeasureComponent,
+    EditIngredientComponent],
   imports: [
     CommonModule,
     FormsModule,

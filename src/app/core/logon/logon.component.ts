@@ -50,7 +50,9 @@ export class LogonComponent implements OnInit, OnDestroy {
     this.userValidatorSubscription.unsubscribe();
   }
 
-  onLogon() {
+  onLogon(event) {
+    /* console.log(event); */
+    /* event.stopPropagation(); */
     this.authService.logon(this.logonForm.get('usr').value,
       this.logonForm.get('password').value).subscribe(
         (value) => {
