@@ -1,0 +1,21 @@
+
+  <form #f="ngForm" (ngSubmit)="this.onUpdate()">
+      <div class="d-flex flex-row">
+        <input class="form-control form-control-sm m-2" name="description" [(ngModel)]="this.unitOfMeasurement.Description">
+        <input class="form-control form-control-sm m-2" name="abbreviation" [(ngModel)]="this.unitOfMeasurement.Abbreviation">
+        <button class="btn btn-sm btn-outline-primary m-2" type="submit">
+          <fa-icon [icon]="faSync"></fa-icon>
+          Update
+        </button>     
+        <button class="btn btn-sm btn-outline-danger m-2" type="button" (click)="this.onDelete()">
+          <fa-icon [icon]="faTimes"></fa-icon>
+          Remove
+        </button>
+      </div>
+    </form>
+    <!-- <small class="mx-2" [ngClass]="{'text-success': this.resultType=='success',
+                      'text-danger': this.resultType=='failure'}"
+            *ngIf="this.showMessage">
+      {{ this.result }}
+    </small> -->
+  

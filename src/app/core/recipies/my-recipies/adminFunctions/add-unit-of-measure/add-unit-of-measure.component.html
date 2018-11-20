@@ -1,22 +1,56 @@
-<div class="bg-white container-fluid rounded py-1 mt-3">
-    <form>
-      <div class="d-flex">
-          <input type="text" class="form-control m-3" placeholder="Unit name">
-          <button type="button" class="btn btn-outline-primary m-3"> 
-              <fa-icon [icon]="faPlus"></fa-icon>
-              Add to file</button>
-      </div>    
-    </form>  
-  </div>
-  
-  <div class="bg-white container-fluid rounded py-1 mt-3">
-      <form>
+<div class="container">
+    <div class="bg-white container-fluid rounded py-1 mt-3">
+      <form #addUnitOfMeasurement="ngForm" (ngSubmit)="this.onAddUOM()" autocomplete="off">
         <div class="d-flex">
-            <input type="text" class="form-control m-3" placeholder="Search available units">
-            <button type="button" class="btn btn-outline-primary m-3">
-              <fa-icon [icon]="faSearch"></fa-icon>              
-            </button>
-        </div>    
-      </form>  
+          <input type="text" class="form-control m-3" placeholder="Unit of measurement" name="description" ngModel required
+            [ngClass]="{'border-danger':
+                        !addUnitOfMeasurement.valid && 
+                        addUnitOfMeasurement.controls['description'].touched &&
+                        addUnitOfMeasurement.controls['abbreviation'].touched}">
+          <input type="text" class="form-control m-3" placeholder="Abbreviation" name="abbreviation" ngModel required 
+            [ngClass]="{'border-danger': 
+                         !addUnitOfMeasurement.valid && 
+                         addUnitOfMeasurement.controls['description'].touched &&
+                         addUnitOfMeasurement.controls['abbreviation'].touched}">
+          <button type="submit" class="btn btn-outline-primary m-3">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            Add to file
+          </button>
+        </div>
+      </form>
+      <small *ngIf="!addUnitOfMeasurement.valid &&
+                    addUnitOfMeasurement.controls['description'].touched &&
+                    addUnitOfMeasurement.controls['abbreviation'].touched" 
+              class="form-text text-muted mx-3 mb-3">
+        Field is required
+      </small>
+    </div>    
+    <div class="bg-white container-fluid rounded py-1 my-4">
+      <form #searchUnitOfMeasurement="ngForm" (ngSubmit)="this.onSearchUOM()">
+        <div class="d-flex">
+          <input type="text" class="form-control m-3" placeholder="Search available units of measurement" ngModel required
+            name="searchdescription" 
+            [ngClass]="{'border-danger': !this.searchUnitOfMeasurement.valid && searchUnitOfMeasurement.controls['searchdescription'].touched }">
+          <button type="submit" class="btn btn-outline-primary m-3">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </button>
+        </div>
+      </form>
+      <small 
+        *ngIf="!searchUnitOfMeasurement.valid && searchUnitOfMeasurement.controls['searchdescription'].touched" 
+        class="form-text text-muted mx-3 mb-3">
+        Field is required
+      </small>
+      <div *ngIf="this.unitOfMeasurementSearchResults != null && this.unitOfMeasurementSearchResults.length > 0">
+        <mat-paginator [length]="this.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" #paginator (page)="this.pageChanged($event)">
+        </mat-paginator>
+        <div *ngIf="this.unitOfMeasurementSearchResults != null && 
+                this.unitOfMeasurementSearchResults.length > 0">
+          <app-edit-unit-of-measure *ngFor="let uom of unitOfMeasurementSearchResults" 
+            [unitOfMeasurement]="uom"
+            [unitOfMeasurementDeleted]="this.unitOfMeasurementDeleted">
+          </app-edit-unit-of-measure>
+        </div>
+      </div>
     </div>
-  
+  </div>

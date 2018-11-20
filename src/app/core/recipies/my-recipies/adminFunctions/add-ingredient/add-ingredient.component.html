@@ -2,7 +2,7 @@
   <div class="bg-white container-fluid rounded py-1 mt-3">
     <form #addIngredient="ngForm" (ngSubmit)="this.onAddIngredient()" autocomplete="off">
       <div class="d-flex">
-        <input #ing type="text" class="form-control m-3" placeholder="Ingredient name" name="ingredient" ngModel
+        <input type="text" class="form-control m-3" placeholder="Ingredient name" name="ingredient" ngModel
           required [ngClass]="{'border-danger': !this.addIngredient.valid && addIngredient.controls['ingredient'].touched }">
         <button type="submit" class="btn btn-outline-primary m-3">
           <fa-icon [icon]="faPlus"></fa-icon>
@@ -13,10 +13,6 @@
     <small *ngIf="!this.addIngredient.valid && addIngredient.controls['ingredient'].touched" class="form-text text-muted mx-3 mb-3">Field
       is required</small>
   </div>
-
-  <!-- <ngb-alert *ngIf="this.alertVisible" class="m-3" [type]="this.alertType" (close)="this.closeAlert()">{{
-    this.alertText }}</ngb-alert> -->
-
   <div class="bg-white container-fluid rounded py-1 my-4">
     <form #searchIngredients="ngForm" (ngSubmit)="this.onSearchIngredients()">
       <div class="d-flex">
@@ -40,15 +36,4 @@
       </div>
     </div>
   </div>
-
- 
-  
-
-  <!-- <div *ngIf="this.ingredientSearchResults != null && 
-              this.ingredientSearchResults.length > 0" class="bg-white container-fluid rounded py-1 mt-3">
-    <app-edit-ingredient *ngFor="let ingredient of ingredientSearchResults" 
-    [ingredient]="ingredient"
-    [ingredientDeleted]="this.ingredientDeleted">    
-    </app-edit-ingredient>
-  </div> -->
 </div>

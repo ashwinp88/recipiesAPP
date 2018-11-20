@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 
 import { AuthService } from './auth-service.service';
 import { Observable } from 'rxjs';
+import { Ingredient } from '../core/recipies/models/ingredient.model';
+import { UnitOfMeasurement } from '../core/recipies/models/unit-of-measurement.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,7 @@ export class DataService {
   );
 
   constructor(private authService: AuthService, private httpClient: HttpClient) { }
+
   addIngredient(ingredient: string) {
     const postBody = { 'Description': ingredient };
     return this.httpClient.post(this.APIUrl + '/api/Ingredients', postBody, { headers: this.httpHeader });
@@ -38,13 +41,44 @@ export class DataService {
     return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
   }
 
-  editIngredient(ingredient: {ID: number, Description: string}) {
+  editIngredient(ingredient: Ingredient) {
     const url = `${this.APIUrl}/api/Ingredients/${ingredient.ID}`;
     return this.httpClient.put(url, ingredient, { headers: this.httpHeader });
   }
 
   deleteIngredient(id: number) {
     const url = `${this.APIUrl}/api/Ingredients/${id}`;
+    return this.httpClient.delete(url, { headers: this.httpHeader });
+  }
+
+  addUOM(description: string, abbreviation: string) {
+    const postBody = { 'Description': description, 'Abbreviation': abbreviation };
+    return this.httpClient.post(this.APIUrl + '/api/UnitsOfMeasurements', postBody, { headers: this.httpHeader });
+  }
+
+  getAllUOM(pageSize: string, pageNumber: string) {
+    const url = `${this.APIUrl}/api/UnitsOfMeasurements/`;
+    const httpParameters: HttpParams = new HttpParams().set(
+      'pageSize', pageSize).set(
+      'pageNumber', pageNumber);
+    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
+  }
+
+  getUOMByName(name: string, pageSize: string, pageNumber: string) {
+    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${name}`;
+    const httpParameters: HttpParams = new HttpParams().set(
+      'pageSize', pageSize).set(
+      'pageNumber', pageNumber);
+    return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
+  }
+
+  editUOM(unitOfMEasurement: UnitOfMeasurement) {
+    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${unitOfMEasurement.ID}`;
+    return this.httpClient.put(url, unitOfMEasurement, { headers: this.httpHeader });
+  }
+
+  deleteUOM(id: number) {
+    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${id}`;
     return this.httpClient.delete(url, { headers: this.httpHeader });
   }
 }

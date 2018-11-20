@@ -27,6 +27,7 @@ import { EditIngredientComponent } from './my-recipies/adminFunctions/edit-ingre
 import { RecipiesComponent } from './recipies.component';
 import { RecipieListComponent } from './recipie-list/recipie-list.component';
 import { RecipieDetailComponent } from './recipie-detail/recipie-detail.component';
+import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-unit-of-measure/edit-unit-of-measure.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RecipieDetailComponent } from './recipie-detail/recipie-detail.componen
     MyRecipiesComponent,
     AddIngredientComponent,
     AddUnitOfMeasureComponent,
-    EditIngredientComponent],
+    EditIngredientComponent,
+    EditUnitOfMeasureComponent],
   imports: [
     CommonModule,
     FormsModule,
