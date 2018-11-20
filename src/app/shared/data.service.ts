@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { AuthService } from './auth-service.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,20 @@ export class DataService {
     return this.httpClient.post(this.APIUrl + '/api/Ingredients', postBody, { headers: this.httpHeader });
   }
 
-  getIngredientsByName(ingredient: string) {
+  getAllIngredients(pageSize: string, pageNumber: string) {
+    const url = `${this.APIUrl}/api/Ingredients/`;
+    const httpParameters: HttpParams = new HttpParams().set(
+      'pageSize', pageSize).set(
+      'pageNumber', pageNumber);
+    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
+  }
+
+  getIngredientsByName(ingredient: string, pageSize: string, pageNumber: string) {
     const url = `${this.APIUrl}/api/Ingredients/${ingredient}`;
-    // console.log(url);
-    return this.httpClient.get(url, { headers: this.httpHeader });
+    const httpParameters: HttpParams = new HttpParams().set(
+      'pageSize', pageSize).set(
+      'pageNumber', pageNumber);
+    return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
   }
 
   editIngredient(ingredient: {ID: number, Description: string}) {

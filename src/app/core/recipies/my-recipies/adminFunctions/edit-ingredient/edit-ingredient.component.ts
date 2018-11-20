@@ -4,6 +4,7 @@ import { DataService } from 'src/app/shared/data.service';
 import { Subject } from 'rxjs';
 
 import { Ingredient } from '../../../models/ingredient.model';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-ingredient',
@@ -16,60 +17,36 @@ export class EditIngredientComponent implements OnInit {
   @Input() ingredient: Ingredient;
   @Input() ingredientDeleted: Subject<Ingredient>;
 
-  resultType: string;
-  result: string;
-  showMessage = false;
-  success; fail;
+  private snackBarRef: MatSnackBarRef<any>;
 
-
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    // console.log(this.ingredient);
   }
 
   onUpdate() {
+    if (this.snackBarRef != null) {
+      this.snackBarRef.dismiss();
+    }
     this.dataService.editIngredient(this.ingredient).subscribe(
       () => {
-        this.resultType = 'success';
-        this.result = 'successfully updated record.';
-        this.showMessage = true;
-        if (this.success != null) {
-          clearTimeout(this.success);
-        }
-        this.success = setTimeout(this.resetMessage.bind(this), 1000 * 5);
+        this.snackBarRef = this.snackBar.open('Updated record.', 'Dismiss', { duration: 1000 * 5 });
       },
       () => {
-        this.resultType = 'failure';
-        this.result = 'somwthing went wrong.';
-        this.showMessage = true;
-        if (this.fail != null) {
-          clearTimeout(this.fail);
-        }
-        this.fail = setTimeout(this.resetMessage.bind(this), 1000 * 5);
+        this.snackBarRef = this.snackBar.open('Something went wrong!', 'Dismiss', { duration: 1000 * 5 });
       }
     );
   }
 
   onDelete() {
+    if (this.snackBarRef != null) {
+      this.snackBarRef.dismiss();
+    }
     this.dataService.deleteIngredient(this.ingredient.ID).subscribe(
       () => this.ingredientDeleted.next(this.ingredient),
       () => {
-        this.resultType = 'failure';
-        this.result = 'something went wrong.';
-        this.showMessage = true;
-        if (this.fail != null) {
-          clearTimeout(this.fail);
-        }
-        this.fail = setTimeout(this.resetMessage.bind(this), 1000 * 5);
+        this.snackBarRef = this.snackBar.open('Something went wrong!', 'Dismiss', { duration: 1000 * 5 });
       }
     );
   }
-
-  resetMessage() {
-    this.result = '';
-    this.resultType = '';
-    this.showMessage = false;
-  }
-
 }

@@ -3,10 +3,10 @@ import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Ingredient } from '../../../models/ingredient.model';
-
-
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -17,30 +17,36 @@ import { Ingredient } from '../../../models/ingredient.model';
 export class AddIngredientComponent implements OnInit {
   @ViewChild('addIngredient') ingredientForm: NgForm;
   @ViewChild('searchIngredients') searchForm: NgForm;
+  @ViewChild('paginator') paginator: MatPaginator;
 
   ingredientDeleted: Subject<Ingredient>;
   faSearch = faSearch;
   faPlus = faPlus;
 
-  alertVisible = false;
-  alertText = '';
-  alertType = '';
-
-  // State management variables
-  private successTimer;
-  private failureTimer;
+  private snackBarRef: MatSnackBarRef<any>;
+  pageEvent: PageEvent;
+  length: number;
+  resetPaginator = true;
 
   ingredientSearchResults: Ingredient[];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.ingredientSearchResults = [];
+
+    this.pageEvent = new PageEvent();
+    this.pageEvent.pageSize = 5;
+    this.pageEvent.pageIndex = 0;
+
     this.ingredientDeleted = new Subject<Ingredient>();
     this.ingredientDeleted.subscribe(
       (deletedIngredient: Ingredient) => {
         const index = this.ingredientSearchResults.indexOf(deletedIngredient);
         if (index !== -1) {
           this.ingredientSearchResults.splice(index, 1);
+          this.openSnackBar( 'Deleted record.',
+          'Dismiss');
         }
       }
     );
@@ -51,22 +57,23 @@ export class AddIngredientComponent implements OnInit {
       const ingredient = this.ingredientForm.controls['ingredient'].value;
       this.dataService.addIngredient(ingredient).subscribe(
         (val) => {
-          this.alertText = `Added ingredient ${val['Description']}. Record ID returned is ${val['ID']}`;
-          this.alertType = 'success';
-          this.alertVisible = true;
-          if (this.successTimer != null) {
-            clearTimeout(this.successTimer);
+          if (this.snackBarRef != null) {
+            this.snackBarRef.dismiss();
           }
-          this.successTimer = setTimeout(this.resetAlert.bind(this), 1000 * 5);
+          this.openSnackBar( `Added ingredient ${val['Description']}. Record ID returned is ${val['ID']}`,
+          'Dismiss');
         },
         (val) => {
-          this.alertText = 'There was an issue inserting the record.';
-          this.alertType = 'danger';
-          this.alertVisible = true;
-          if (this.failureTimer != null) {
-            clearTimeout(this.failureTimer);
+          if (this.snackBarRef != null) {
+            this.snackBarRef.dismiss();
           }
-          this.failureTimer = setTimeout(this.resetAlert.bind(this), 1000 * 5);
+          if (val.error['Message']) {
+            this.openSnackBar( val.error.Message,
+            'Dismiss');
+          } else {
+            this.openSnackBar( 'There was an issue inserting the record.',
+            'Dismiss');
+          }
         }
       );
     } else {
@@ -74,32 +81,45 @@ export class AddIngredientComponent implements OnInit {
     }
   }
 
-  resetAlert() {
-    this.alertVisible = false;
-    this.alertText = '';
-    this.alertType = '';
+  openSnackBar(content: string, action: string) {
+    this.snackBarRef = this.snackBar.open(content, action, { duration: 1000 * 5 });
   }
 
   onSearchIngredients() {
     if (this.searchForm.valid) {
+      this.length = 0;
+      if (this.resetPaginator && this.paginator != null) {
+        this.paginator.length = 0;
+        this.paginator.pageIndex = 0;
+      }
       const ingredient = this.searchForm.controls['searchIngredient'].value;
-      this.dataService.getIngredientsByName(ingredient)
-        .pipe
-        (map(res => res as Ingredient[])).
-        subscribe(
-          (val) => {
-            this.ingredientSearchResults = val;
+      if (ingredient === '*') {
+        this.dataService.getAllIngredients(this.pageEvent.pageSize.toString(), this.pageEvent.pageIndex.toString()).subscribe(
+          (resp: HttpResponse<Ingredient[]>) => {
+           this.length = +resp.headers.get('recordCount');
+           this.ingredientSearchResults = resp.body as Ingredient[];
           }
         );
+      } else {
+        this.dataService.getIngredientsByName(
+          ingredient,
+          this.pageEvent.pageSize.toString(),
+          this.pageEvent.pageIndex.toString()).subscribe(
+          (resp: HttpResponse<Ingredient[]>) => {
+            this.length = +resp.headers.get('recordCount');
+            this.ingredientSearchResults = resp.body as Ingredient[];
+          }
+        );
+      }
     } else {
       this.searchForm.controls['searchIngredient'].markAsTouched();
     }
   }
 
-  closeAlert() {
-    this.alertText = '';
-    this.alertType = '';
-    this.alertVisible = false;
+  pageChanged(_pageEvent: PageEvent) {
+    this.resetPaginator = false;
+    this.pageEvent = _pageEvent;
+    this.onSearchIngredients();
+    this.resetPaginator = true;
   }
-
 }

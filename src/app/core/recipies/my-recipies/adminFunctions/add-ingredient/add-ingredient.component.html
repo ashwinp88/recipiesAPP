@@ -14,27 +14,41 @@
       is required</small>
   </div>
 
-  <ngb-alert *ngIf="this.alertVisible" class="m-3" [type]="this.alertType" (close)="this.closeAlert()">{{
-    this.alertText }}</ngb-alert>
+  <!-- <ngb-alert *ngIf="this.alertVisible" class="m-3" [type]="this.alertType" (close)="this.closeAlert()">{{
+    this.alertText }}</ngb-alert> -->
 
-  <div class="bg-white container-fluid rounded py-1 mt-3">
-    <form #searchIngredients = "ngForm" (ngSubmit) = "this.onSearchIngredients()">
+  <div class="bg-white container-fluid rounded py-1 my-4">
+    <form #searchIngredients="ngForm" (ngSubmit)="this.onSearchIngredients()">
       <div class="d-flex">
-        <input type="text" class="form-control m-3" placeholder="Search available ingredients" ngModel name="searchIngredient" required
-        [ngClass]="{'border-danger': !this.searchIngredients.valid && searchIngredients.controls['searchIngredient'].touched }">
+        <input type="text" class="form-control m-3" placeholder="Search available ingredients" ngModel name="searchIngredient"
+          required [ngClass]="{'border-danger': !this.searchIngredients.valid && searchIngredients.controls['searchIngredient'].touched }">
         <button type="submit" class="btn btn-outline-primary m-3">
           <fa-icon [icon]="faSearch"></fa-icon>
         </button>
       </div>
     </form>
     <small *ngIf="!this.searchIngredients.valid && searchIngredients.controls['searchIngredient'].touched" class="form-text text-muted mx-3 mb-3">Field
-        is required</small>
+      is required</small>
+    <div *ngIf="this.ingredientSearchResults != null && this.ingredientSearchResults.length > 0">
+      <mat-paginator [length]="this.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" #paginator (page)="this.pageChanged($event)">
+      </mat-paginator>
+      <div *ngIf="this.ingredientSearchResults != null && 
+              this.ingredientSearchResults.length > 0">
+        <app-edit-ingredient *ngFor="let ingredient of ingredientSearchResults" [ingredient]="ingredient"
+          [ingredientDeleted]="this.ingredientDeleted">
+        </app-edit-ingredient>
+      </div>
+    </div>
   </div>
-  <div *ngIf="this.ingredientSearchResults != null && 
+
+ 
+  
+
+  <!-- <div *ngIf="this.ingredientSearchResults != null && 
               this.ingredientSearchResults.length > 0" class="bg-white container-fluid rounded py-1 mt-3">
     <app-edit-ingredient *ngFor="let ingredient of ingredientSearchResults" 
     [ingredient]="ingredient"
     [ingredientDeleted]="this.ingredientDeleted">    
     </app-edit-ingredient>
-  </div>
+  </div> -->
 </div>
