@@ -33,7 +33,8 @@
   <div *ngIf="this.ingredientSearchResults != null && 
               this.ingredientSearchResults.length > 0" class="bg-white container-fluid rounded py-1 mt-3">
     <app-edit-ingredient *ngFor="let ingredient of ingredientSearchResults" 
-    [ingredient]="ingredient">    
+    [ingredient]="ingredient"
+    [ingredientDeleted]="this.ingredientDeleted">    
     </app-edit-ingredient>
   </div>
 </div>

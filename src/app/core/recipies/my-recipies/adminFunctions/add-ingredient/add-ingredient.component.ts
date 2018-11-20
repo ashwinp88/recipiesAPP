@@ -2,8 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Ingredient } from '../../../models/ingredient.model';
 
 
 
@@ -17,6 +18,7 @@ export class AddIngredientComponent implements OnInit {
   @ViewChild('addIngredient') ingredientForm: NgForm;
   @ViewChild('searchIngredients') searchForm: NgForm;
 
+  ingredientDeleted: Subject<Ingredient>;
   faSearch = faSearch;
   faPlus = faPlus;
 
@@ -28,11 +30,20 @@ export class AddIngredientComponent implements OnInit {
   private successTimer;
   private failureTimer;
 
-  ingredientSearchResults: {id: number, description: string}[];
+  ingredientSearchResults: Ingredient[];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.ingredientDeleted = new Subject<Ingredient>();
+    this.ingredientDeleted.subscribe(
+      (deletedIngredient: Ingredient) => {
+        const index = this.ingredientSearchResults.indexOf(deletedIngredient);
+        if (index !== -1) {
+          this.ingredientSearchResults.splice(index, 1);
+        }
+      }
+    );
   }
 
   onAddIngredient() {
@@ -57,16 +68,16 @@ export class AddIngredientComponent implements OnInit {
           }
           this.failureTimer = setTimeout(this.resetAlert.bind(this), 1000 * 5);
         }
-        );
+      );
     } else {
       this.ingredientForm.controls['ingredient'].markAsTouched();
     }
   }
 
   resetAlert() {
-      this.alertVisible = false;
-      this.alertText = '';
-      this.alertType = '';
+    this.alertVisible = false;
+    this.alertText = '';
+    this.alertType = '';
   }
 
   onSearchIngredients() {
@@ -74,21 +85,14 @@ export class AddIngredientComponent implements OnInit {
       const ingredient = this.searchForm.controls['searchIngredient'].value;
       this.dataService.getIngredientsByName(ingredient)
         .pipe
-        (map(res =>  res as {'id': number, 'description': string}[])).
+        (map(res => res as Ingredient[])).
         subscribe(
           (val) => {
             this.ingredientSearchResults = val;
           }
         );
-     /*  this.ingredientSearchResults$.subscribe(
-        (obj) => console.log(obj)
-      ); */
-     /*  this.dataService.getIngredientsByName(ingredient).subscribe(
-        (val) => {
-          this.ingredientSearchResults.push(val);
-        },
-        (val) => console.log(val)
-      ); */
+    } else {
+      this.searchForm.controls['searchIngredient'].markAsTouched();
     }
   }
 

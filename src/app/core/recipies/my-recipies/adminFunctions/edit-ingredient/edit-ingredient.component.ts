@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { Subject } from 'rxjs';
+
+import { Ingredient } from '../../../models/ingredient.model';
 
 @Component({
   selector: 'app-edit-ingredient',
@@ -11,7 +13,8 @@ import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 export class EditIngredientComponent implements OnInit {
   faSync = faSync;
   faTimes = faTimes;
-  @Input() ingredient: {ID: number, Description: string};
+  @Input() ingredient: Ingredient;
+  @Input() ingredientDeleted: Subject<Ingredient>;
 
   resultType: string;
   result: string;
@@ -39,6 +42,21 @@ export class EditIngredientComponent implements OnInit {
       () => {
         this.resultType = 'failure';
         this.result = 'somwthing went wrong.';
+        this.showMessage = true;
+        if (this.fail != null) {
+          clearTimeout(this.fail);
+        }
+        this.fail = setTimeout(this.resetMessage.bind(this), 1000 * 5);
+      }
+    );
+  }
+
+  onDelete() {
+    this.dataService.deleteIngredient(this.ingredient.ID).subscribe(
+      () => this.ingredientDeleted.next(this.ingredient),
+      () => {
+        this.resultType = 'failure';
+        this.result = 'something went wrong.';
         this.showMessage = true;
         if (this.fail != null) {
           clearTimeout(this.fail);
