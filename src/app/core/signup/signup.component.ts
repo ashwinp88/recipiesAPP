@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   signingUp = false;
   signupForm: FormGroup;
-  errorMessage = '';
+  errorMessage = 'Something went wrong!';
 
   private emailValidatorSubscription: Subscription;
   private passwordValidatorSubscription: Subscription;

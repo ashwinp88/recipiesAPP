@@ -20,7 +20,7 @@ export class LogonComponent implements OnInit, OnDestroy {
   faUser = faUser;
   faLock = faLock;
   formValidators = FormValidatorFunctions;
-  errorMessage = '';
+  errorMessage = 'Something went wrong!';
 
   private userValidatorSubscription: Subscription;
 
