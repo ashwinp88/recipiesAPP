@@ -1,4 +1,4 @@
-<div class="bg-white container rounded py-5 mt-3">
+<div class="bg-white container rounded my-5 py-3">
     <form>        
         <mat-form-field class="w-100">
             <h2><input matInput placeholder="Recipe title"></h2>
@@ -14,35 +14,8 @@
         &nbsp;
         <p for="" style="color:grey">Ingredients</p>
         <app-recipie-ingredient *ngFor="let i of this.ingredients"></app-recipie-ingredient>
-        <button type="button" class="btn btn-primary" (click)="this.ingredients.push('a')">
+        <button type="button" class="btn btn-primary m-1" (click)="this.ingredients.push('a')">
             Add Ingredient
-        </button>
-
-
-       <!--  <div class="Card">
-            <div class="card-header">
-                Ingredients
-            </div>
-            <div class="card-body">
-             
-
-            </div>
-            <div class="card-footer">
-               
-            </div>
-        </div> -->
-
-
-        <!--  <div class="row">
-            <div class="col-sm-6">
-               
-            </div>
-            <div class="col-sm-6">
-                
-                <mat-form-field class="w-80">
-                    <input matInput placeholder="Choose a main image">
-                </mat-form-field>
-            </div>
-        </div> -->
+        </button>     
     </form>
 </div>

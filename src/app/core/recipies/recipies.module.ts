@@ -10,6 +10,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -50,7 +52,9 @@ import { RecipieDetailComponent } from './recipie-detail/recipie-detail.componen
     NgbModule,
     MatPaginatorModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    MatCardModule
   ]
 })
 export class RecipiesModule { }
