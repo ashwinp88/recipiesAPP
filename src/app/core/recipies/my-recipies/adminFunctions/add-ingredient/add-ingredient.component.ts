@@ -3,7 +3,7 @@ import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Ingredient } from '../../../models/ingredient.model';
+import { Ingredient, IngredientResponse } from '../../../models/ingredient.model';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { HttpResponse } from '@angular/common/http';
@@ -28,12 +28,12 @@ export class AddIngredientComponent implements OnInit {
   length: number;
   resetPaginator = true;
 
-  ingredientSearchResults: Ingredient[];
+  ingredientSearchResults: IngredientResponse;
 
   constructor(private dataService: DataService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.ingredientSearchResults = [];
+    this.ingredientSearchResults = new IngredientResponse([], 0);
 
     this.pageEvent = new PageEvent();
     this.pageEvent.pageSize = 5;
@@ -42,9 +42,10 @@ export class AddIngredientComponent implements OnInit {
     this.ingredientDeleted = new Subject<Ingredient>();
     this.ingredientDeleted.subscribe(
       (deletedIngredient: Ingredient) => {
-        const index = this.ingredientSearchResults.indexOf(deletedIngredient);
+        const index = this.ingredientSearchResults.Ingredients.indexOf(deletedIngredient);
         if (index !== -1) {
-          this.ingredientSearchResults.splice(index, 1);
+          this.ingredientSearchResults.Ingredients.splice(index, 1);
+          this.ingredientSearchResults.Length = this.ingredientSearchResults.Length - 1;
           this.openSnackBar( 'Deleted record.',
           'Dismiss');
         }
@@ -95,9 +96,9 @@ export class AddIngredientComponent implements OnInit {
       const ingredient = this.searchForm.controls['searchIngredient'].value;
       if (ingredient === '*') {
         this.dataService.getAllIngredients(this.pageEvent.pageSize.toString(), this.pageEvent.pageIndex.toString()).subscribe(
-          (resp: HttpResponse<Ingredient[]>) => {
-           this.length = +resp.headers.get('recordCount');
-           this.ingredientSearchResults = resp.body as Ingredient[];
+          (resp: HttpResponse<IngredientResponse>) => {
+           this.length = +resp.body.Length;
+           this.ingredientSearchResults = resp.body;
           }
         );
       } else {
@@ -105,9 +106,9 @@ export class AddIngredientComponent implements OnInit {
           ingredient,
           this.pageEvent.pageSize.toString(),
           this.pageEvent.pageIndex.toString()).subscribe(
-          (resp: HttpResponse<Ingredient[]>) => {
-            this.length = +resp.headers.get('recordCount');
-            this.ingredientSearchResults = resp.body as Ingredient[];
+          (resp: HttpResponse<IngredientResponse>) => {
+            this.length = +resp.body.Length;
+            this.ingredientSearchResults = resp.body;
           }
         );
       }

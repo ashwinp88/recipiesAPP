@@ -5,10 +5,13 @@ import { AuthService } from 'src/app/shared/auth-service.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.provider';
 import { Subscription } from 'rxjs';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component';
-import { HttpErrorResponse } from '@angular/common/http';
+/* import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; */
+
+import { MatDialog } from '@angular/material';
+/* import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component'; */
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-logon',
@@ -26,7 +29,8 @@ export class LogonComponent implements OnInit, OnDestroy {
 
   logonForm: FormGroup;
 
-  constructor(public authService: AuthService, public modalService: NgbModal, private router: Router) { }
+  /* constructor(public authService: AuthService, public modalService: NgbModal, private router: Router) { } */
+  constructor(public authService: AuthService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.logonForm = new FormGroup(
@@ -55,9 +59,9 @@ export class LogonComponent implements OnInit, OnDestroy {
     /* event.stopPropagation(); */
     this.authService.logon(this.logonForm.get('usr').value,
       this.logonForm.get('password').value).subscribe(
-        (value) => {
-          this.authService.uName = value['userName'];
-          this.authService.authToken = value['access_token'];
+        (res: HttpResponse<any>) => {
+          this.authService.uName = this.logonForm.get('usr').value;
+          this.authService.authToken = res.body['access_token'];
           this.authService.isAuthorized = true;
           this.router.navigate(['/recipes']);
         },
@@ -75,9 +79,15 @@ export class LogonComponent implements OnInit, OnDestroy {
   }
 
   openErrorModal() {
-    const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
-    modalRef.componentInstance.modalTitle = 'Error Logging in';
+    const dialogRef = this.dialog.open( DialogComponent, { data: {
+      Title: 'Error logging in',
+      Body: this.errorMessage,
+      OkBtnCaption: 'OK',
+      CancelBtnCaption: 'Cancel',
+      CancelBtnVisible : false
+    } });
+    /* modalRef.componentInstance.modalTitle = 'Error Logging in';
     modalRef.componentInstance.modalContent = this.errorMessage;
-    modalRef.componentInstance.modalBtnCancelVisible = false;
+    modalRef.componentInstance.modalBtnCancelVisible = false; */
   }
 }

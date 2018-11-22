@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { HttpResponse } from '@angular/common/http';
-import { UnitOfMeasurement } from '../../../models/unit-of-measurement.model';
+import { UnitOfMeasurement, UnitOfMeasurementResponse } from '../../../models/unit-of-measurement.model';
 
 
 @Component({
@@ -28,12 +28,12 @@ export class AddUnitOfMeasureComponent implements OnInit  {
   length: number;
   resetPaginator = true;
 
-  unitOfMeasurementSearchResults: UnitOfMeasurement[];
+  unitOfMeasurementSearchResults: UnitOfMeasurementResponse;
 
   constructor(private dataService: DataService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.unitOfMeasurementSearchResults = [];
+    this.unitOfMeasurementSearchResults = new UnitOfMeasurementResponse([], 0);
 
     this.pageEvent = new PageEvent();
     this.pageEvent.pageSize = 5;
@@ -42,9 +42,10 @@ export class AddUnitOfMeasureComponent implements OnInit  {
     this.unitOfMeasurementDeleted = new Subject<UnitOfMeasurement>();
     this.unitOfMeasurementDeleted.subscribe(
       (deletedUnitofMeasurement: UnitOfMeasurement) => {
-        const index = this.unitOfMeasurementSearchResults.indexOf(deletedUnitofMeasurement);
+        const index = this.unitOfMeasurementSearchResults.UnitsOfMeasurements.indexOf(deletedUnitofMeasurement);
         if (index !== -1) {
-          this.unitOfMeasurementSearchResults.splice(index, 1);
+          this.unitOfMeasurementSearchResults.UnitsOfMeasurements.splice(index, 1);
+          this.unitOfMeasurementSearchResults.Length = this.unitOfMeasurementSearchResults.Length - 1;
           this.openSnackBar( 'Deleted record.',
           'Dismiss');
         }
@@ -94,12 +95,12 @@ export class AddUnitOfMeasureComponent implements OnInit  {
         this.paginator.length = 0;
         this.paginator.pageIndex = 0;
       }
-      const description = this.searchForm.controls['description'].value;
+      const description = this.searchForm.controls['searchdescription'].value;
       if (description === '*') {
         this.dataService.getAllUOM(this.pageEvent.pageSize.toString(), this.pageEvent.pageIndex.toString()).subscribe(
-          (resp: HttpResponse<UnitOfMeasurement[]>) => {
-           this.length = +resp.headers.get('recordCount');
-           this.unitOfMeasurementSearchResults = resp.body as UnitOfMeasurement[];
+          (resp: HttpResponse<UnitOfMeasurementResponse>) => {
+           this.length = +resp.body.Length;
+           this.unitOfMeasurementSearchResults = resp.body;
           }
         );
       } else {
@@ -107,9 +108,9 @@ export class AddUnitOfMeasureComponent implements OnInit  {
           description,
           this.pageEvent.pageSize.toString(),
           this.pageEvent.pageIndex.toString()).subscribe(
-          (resp: HttpResponse<UnitOfMeasurement[]>) => {
-            this.length = +resp.headers.get('recordCount');
-            this.unitOfMeasurementSearchResults = resp.body as UnitOfMeasurement[];
+          (resp: HttpResponse<UnitOfMeasurementResponse>) => {
+            this.length = +resp.body.Length;
+            this.unitOfMeasurementSearchResults = resp.body;
           }
         );
       }

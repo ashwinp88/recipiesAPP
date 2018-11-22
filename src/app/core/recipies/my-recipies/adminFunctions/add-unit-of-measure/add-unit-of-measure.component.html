@@ -41,12 +41,12 @@
         class="form-text text-muted mx-3 mb-3">
         Field is required
       </small>
-      <div *ngIf="this.unitOfMeasurementSearchResults != null && this.unitOfMeasurementSearchResults.length > 0">
+      <div *ngIf="this.unitOfMeasurementSearchResults != null && this.unitOfMeasurementSearchResults.Length > 0">
         <mat-paginator [length]="this.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" #paginator (page)="this.pageChanged($event)">
         </mat-paginator>
         <div *ngIf="this.unitOfMeasurementSearchResults != null && 
-                this.unitOfMeasurementSearchResults.length > 0">
-          <app-edit-unit-of-measure *ngFor="let uom of unitOfMeasurementSearchResults" 
+                this.unitOfMeasurementSearchResults.Length > 0">
+          <app-edit-unit-of-measure *ngFor="let uom of unitOfMeasurementSearchResults.UnitsOfMeasurements" 
             [unitOfMeasurement]="uom"
             [unitOfMeasurementDeleted]="this.unitOfMeasurementDeleted">
           </app-edit-unit-of-measure>

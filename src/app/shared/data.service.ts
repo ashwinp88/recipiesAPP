@@ -10,7 +10,7 @@ import { UnitOfMeasurement } from '../core/recipies/models/unit-of-measurement.m
   providedIn: 'root'
 })
 export class DataService {
-  private APIUrl = 'http://localhost:50647';
+  private APIUrl = 'http://localhost:59797';
   private httpHeader: HttpHeaders = new HttpHeaders(
     {
       'Content-Type': 'application/json',
@@ -53,11 +53,11 @@ export class DataService {
 
   addUOM(description: string, abbreviation: string) {
     const postBody = { 'Description': description, 'Abbreviation': abbreviation };
-    return this.httpClient.post(this.APIUrl + '/api/UnitsOfMeasurements', postBody, { headers: this.httpHeader });
+    return this.httpClient.post(this.APIUrl + '/api/UnitsOfMeasure', postBody, { headers: this.httpHeader });
   }
 
   getAllUOM(pageSize: string, pageNumber: string) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasurements/`;
+    const url = `${this.APIUrl}/api/UnitsOfMeasure/`;
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
@@ -73,12 +73,12 @@ export class DataService {
   }
 
   editUOM(unitOfMEasurement: UnitOfMeasurement) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${unitOfMEasurement.ID}`;
+    const url = `${this.APIUrl}/api/UnitsOfMeasure/${unitOfMEasurement.ID}`;
     return this.httpClient.put(url, unitOfMEasurement, { headers: this.httpHeader });
   }
 
   deleteUOM(id: number) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${id}`;
+    const url = `${this.APIUrl}/api/UnitsOfMeasure/${id}`;
     return this.httpClient.delete(url, { headers: this.httpHeader });
   }
 }

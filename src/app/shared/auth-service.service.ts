@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthService {
   authToken = '';
   /* private APIUrl = 'http://localhost:8080/recipiesAPI'; */
-  private APIUrl = 'http://localhost:50647';
+  private APIUrl = 'http://localhost:59797';
   public isAuthorized = false;
   public uName: string;
 
@@ -22,7 +22,7 @@ export class AuthService {
   logon(usr: string, password: string) {
     const loginData = `username=${encodeURIComponent(usr)}&password=${encodeURIComponent(password)}&grant_type=password`;
     const httpHeader: HttpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded' });
-    return this.httpClient.post(this.APIUrl + '/Token', loginData, { headers: httpHeader });
+    return this.httpClient.post(this.APIUrl + '/Token', loginData, { headers: httpHeader, observe: 'response' });
   }
 
 }

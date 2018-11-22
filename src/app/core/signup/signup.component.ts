@@ -7,9 +7,11 @@ import { AuthService } from 'src/app/shared/auth-service.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component';
+/* import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; */
+/* import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component'; */
+import { MatDialog } from '@angular/material';
 import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.provider';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-signup',
@@ -33,7 +35,8 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private modalService: NgbModal
+    /* private modalService: NgbModal */
+    private dialog: MatDialog
     ) { }
 
   ngOnInit() {
@@ -99,21 +102,38 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   openSuccessModal() {
-    const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
-    modalRef.componentInstance.modalTitle = 'Registration Success!';
-    modalRef.componentInstance.modalContent = 'You will be taken to the login page.';
-    modalRef.componentInstance.modalOkBtnCaption = 'Take Me';
-    modalRef.componentInstance.modalBtnCancelVisible = false;
-    modalRef.result.then(
+    const dialogRef = this.dialog.open(DialogComponent, { data: {
+      Title: 'Registration Success!',
+      Body: 'You will be taken to the login page.',
+      OkBtnCaption: 'Take Me',
+      CancelBtnCaption: 'Cancel',
+      CancelBtnVisible : false
+    } });
+    dialogRef.afterClosed().subscribe(
       () => this.router.navigate(['/logon']),
       () => this.router.navigate(['/logon'])
     );
+   /*  modalRef.componentInstance.modalTitle = 'Registration Success!';
+    modalRef.componentInstance.modalContent = 'You will be taken to the login page.';
+    modalRef.componentInstance.modalOkBtnCaption = 'Take Me';
+    modalRef.componentInstance.modalBtnCancelVisible = false; */
+    /* modalRef.result.then(
+      () => this.router.navigate(['/logon']),
+      () => this.router.navigate(['/logon'])
+    ); */
   }
 
   openErrorModal() {
-   const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
+    const dialogRef = this.dialog.open( DialogComponent, { data: {
+      Title: 'Error logging in',
+      Body: this.errorMessage,
+      OkBtnCaption: 'OK',
+      CancelBtnCaption: 'Cancel',
+      CancelBtnVisible : false
+    } });
+  /*  const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
    modalRef.componentInstance.modalTitle = 'Registration Error!';
    modalRef.componentInstance.modalContent = this.errorMessage;
-   modalRef.componentInstance.modalBtnCancelVisible = false;
+   modalRef.componentInstance.modalBtnCancelVisible = false; */
   }
 }
