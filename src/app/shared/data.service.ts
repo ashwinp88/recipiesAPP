@@ -33,6 +33,11 @@ export class DataService {
     return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
   }
 
+  getIngredientsNoPaging() {
+    const url = `${this.APIUrl}/api/Ingredients/`;
+    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
+  }
+
   getIngredientsByName(ingredient: string, pageSize: string, pageNumber: string) {
     const url = `${this.APIUrl}/api/Ingredients/${ingredient}`;
     const httpParameters: HttpParams = new HttpParams().set(
@@ -62,6 +67,11 @@ export class DataService {
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
     return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
+  }
+
+  getAllUOMNoPaging() {
+    const url = `${this.APIUrl}/api/UnitsOfMeasure/`;
+    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
   }
 
   getUOMByName(name: string, pageSize: string, pageNumber: string) {

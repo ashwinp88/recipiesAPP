@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -28,6 +31,8 @@ import { RecipiesComponent } from './recipies.component';
 import { RecipieListComponent } from './recipie-list/recipie-list.component';
 import { RecipieDetailComponent } from './recipie-detail/recipie-detail.component';
 import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-unit-of-measure/edit-unit-of-measure.component';
+import { IngredientService } from './services/ingredient.service';
+import { UnitOfMeasurementService } from './services/unit-of-measurement.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +51,7 @@ import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-un
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
     RecipiesRoutingModule,
     MatFormFieldModule,
@@ -56,7 +62,11 @@ import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-un
     MatIconModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatCardModule
-  ]
+    MatCardModule,
+    MatStepperModule,
+    MatAutocompleteModule,
+    MatButtonModule
+  ],
+  providers: [IngredientService, UnitOfMeasurementService]
 })
 export class RecipiesModule { }
