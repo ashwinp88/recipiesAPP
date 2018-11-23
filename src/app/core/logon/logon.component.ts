@@ -63,6 +63,7 @@ export class LogonComponent implements OnInit, OnDestroy {
           this.authService.uName = this.logonForm.get('usr').value;
           this.authService.authToken = res.body['access_token'];
           this.authService.isAuthorized = true;
+          this.authService.updateUserID();
           this.router.navigate(['/recipes']);
         },
         (errorValue: HttpErrorResponse) => {

@@ -5,6 +5,7 @@ import { AuthService } from './auth-service.service';
 import { Observable } from 'rxjs';
 import { Ingredient } from '../core/recipies/models/ingredient.model';
 import { UnitOfMeasurement } from '../core/recipies/models/unit-of-measurement.model';
+import { Recipe } from '../core/recipies/models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +91,9 @@ export class DataService {
   deleteUOM(id: number) {
     const url = `${this.APIUrl}/api/UnitsOfMeasure/${id}`;
     return this.httpClient.delete(url, { headers: this.httpHeader });
+  }
+
+  addRecipe(recipe: Recipe) {
+    return this.httpClient.post(this.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
   }
 }

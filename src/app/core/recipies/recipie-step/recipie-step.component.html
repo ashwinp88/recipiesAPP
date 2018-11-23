@@ -1,3 +1,35 @@
-<p>
-  recipie-step works!
-</p>
+<!-- <div class="row">
+  <div class="col-1">
+    1.
+  </div>
+  <div class="col-7">
+   
+  </div>
+  <div class="col-2">
+   
+  </div>
+  <div class="col-2">
+    
+  </div>
+</div> -->
+<div class="d-flex flex-row">
+  <mat-label class="mr-2">
+    {{this.stepNumber}}
+  </mat-label>
+  <mat-form-field class="w-100">
+    <textarea matInput placeholder="Instructions" required>
+            </textarea>
+  </mat-form-field>
+</div>
+<mat-card>
+  <p class="text-primary">Time needed</p>
+  <div class="d-flex flex-row">
+    <mat-form-field style="width: 100px">
+      <input matInput type="number" placeholder="Hours">
+    </mat-form-field>
+    <mat-form-field style="width: 100px">
+      <input matInput type="number" placeholder="Minutes">
+    </mat-form-field>
+
+  </div>
+</mat-card>

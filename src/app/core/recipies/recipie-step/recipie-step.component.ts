@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recipie-step.component.css']
 })
 export class RecipieStepComponent implements OnInit {
-
+  stepNumber: string;
   constructor() { }
 
   ngOnInit() {
+    this.stepNumber = '1';
   }
 
 }

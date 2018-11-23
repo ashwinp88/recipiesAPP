@@ -1,52 +1,54 @@
-<!-- <div class="bg-white container rounded my-5 py-3">
-    <form>        
-        <mat-form-field class="w-100">
-            <h2><input matInput placeholder="Recipe title"></h2>
-        </mat-form-field>
-        <mat-form-field class="w-100">
-            <textarea matInput placeholder="A brief description of the recipe"></textarea>
-        </mat-form-field>
-        <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">
-        <mat-form-field class="w-100">
-            <input type="url" matInput placeholder="url for the recipe's main image" [(ngModel)]="this.imageLocation"
-                name="imageloc">
-        </mat-form-field>
-        &nbsp;
-        <p for="" style="color:grey">Ingredients</p>
-        <app-recipie-ingredient *ngFor="let i of this.ingredients"></app-recipie-ingredient>
-        <button type="button" class="btn btn-primary m-1" (click)="this.ingredients.push('a')">
-            Add Ingredient
-        </button>     
-    </form>
-</div> -->
 <div class="bg-white container rounded my-5 py-3">
-    <mat-vertical-stepper [linear]="true">
-        <mat-step>
-            <form>
+    <mat-vertical-stepper [linear]="this.linear" (selectionChange)="this.onStepperChange($event)">
+        <mat-step [stepControl]="recipeForm">
+            <form [formGroup]="recipeForm">
                 <ng-template matStepLabel>General Information</ng-template>
                 <mat-form-field class="w-100">
-                    <h2><input matInput placeholder="Recipe title"></h2>
+                    <h2>
+                        <input matInput formControlName="title" placeholder="Recipe title" required>
+                    </h2>
                 </mat-form-field>
                 <mat-form-field class="w-100">
-                    <textarea matInput placeholder="A brief description of the recipe"></textarea>
+                    <textarea 
+                        matInput 
+                        formControlName="description"
+                        placeholder="A brief description of the recipe"
+                        required>
+                    </textarea>
                 </mat-form-field>
                 <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">
                 <mat-form-field class="w-100">
-                    <input type="url" matInput placeholder="url for the recipe's main image" [(ngModel)]="this.imageLocation"
+                    <input type="url" 
+                        matInput 
+                        placeholder="url for the recipe's main image" 
+                        formControlName="img"
                         name="imageloc">
                 </mat-form-field>
-                <button mat-button matStepperNext class="btn btn-outline-dark">Next</button>
+                <button mat-button type="submit" matStepperNext class="float-right">Choose ingredients
+                    <fa-icon [icon]="faArrowRight"></fa-icon>
+                </button>
             </form>
         </mat-step>
         <mat-step>
             <form>
                 <ng-template matStepLabel>Ingredients</ng-template>
-                <app-recipie-ingredient *ngFor="let i of this.ingredients"></app-recipie-ingredient>
-               <!--  <button type="button" class="btn btn-primary m-1" (click)="this.ingredients.push('a')">
-                    Add Ingredient
-                </button> -->
-               <button mat-stroked-button>Add another ingredient</button>
+                <app-recipie-ingredient 
+                    *ngFor="let i of this.ingredients"
+                    [ingredientDeleted]="this.ingredientDeleted"
+                    [recipeIngredient]="i">
+                </app-recipie-ingredient>
+
+               <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
+                   <fa-icon [icon]="faPlus"></fa-icon>
+                   Add ingredient</button>
+               <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved
+                    <fa-icon [icon]="faArrowRight"></fa-icon>
+               </button>
             </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Steps</ng-template>
+            <app-recipie-step></app-recipie-step>
         </mat-step>
     </mat-vertical-stepper>
 </div>
