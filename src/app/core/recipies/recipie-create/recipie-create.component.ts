@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { IngredientService } from '../services/ingredient.service';
 import { UnitOfMeasurementService } from '../services/unit-of-measurement.service';
 import { Recipe, RecipeIngredient } from '../models/recipe.model';
@@ -7,7 +7,8 @@ import { AuthService } from 'src/app/shared/auth-service.service';
 import { DataService } from 'src/app/shared/data.service';
 import { Subject } from 'rxjs';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faArrowRight, faSave } from '@fortawesome/free-solid-svg-icons';
+import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.provider';
 
 @Component({
   selector: 'app-recipie-create',
@@ -17,13 +18,14 @@ import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 export class RecipieCreateComponent implements OnInit {
   faPlus = faPlus;
   faArrowRight = faArrowRight;
+  faSave = faSave;
   recipe: Recipe;
   imageLocation: string;
-  ingredients: RecipeIngredient[];
   linear = true;
   recipeForm: FormGroup;
   ingredientsForm: FormGroup;
   ingredientDeleted: Subject<RecipeIngredient>;
+  formValidators = FormValidatorFunctions;
 
   constructor(
     private ingredientService: IngredientService,
@@ -31,6 +33,11 @@ export class RecipieCreateComponent implements OnInit {
     private authService: AuthService,
     private dataService: DataService
     ) {
+  }
+
+  ngOnInit() {
+    this.imageLocation = '';
+    // this.ingredients = [];
     this.recipeForm = new FormGroup (
       {
         'title': new FormControl('', Validators.required),
@@ -41,17 +48,18 @@ export class RecipieCreateComponent implements OnInit {
     this.recipeForm.controls['img'].valueChanges.subscribe(
       (value: string) => this.imageLocation = value
     );
-  }
-
-  ngOnInit() {
-    this.imageLocation = '';
-    this.ingredients = [];
+    this.ingredientsForm = new FormGroup (
+      {
+        'children': new FormArray([])
+      }
+    );
     this.ingredientDeleted = new Subject<RecipeIngredient>();
     this.ingredientDeleted.subscribe(
       (ing: RecipeIngredient) => {
-        const index = this.ingredients.indexOf(ing);
+        const controls = (<FormArray>this.ingredientsForm.controls['children']).controls;
+        const index = controls.findIndex(c => c.value === ing);
         if (index !== -1) {
-          this.ingredients.splice(index, 1);
+          controls.splice(index, 1);
         }
       }
     );
@@ -65,16 +73,16 @@ export class RecipieCreateComponent implements OnInit {
         this.authService.uID,
         false
       );
-       console.log('submitting');
     }
   }
 
   onStep2Submit() {
-    console.log(this.ingredients);
+    console.log(this.ingredientsForm);
   }
 
   onAddIngredient() {
-    this.ingredients.push(new RecipeIngredient(this.recipe, null, null, 0));
+    const newIngredient = new FormControl(new RecipeIngredient(this.recipe, null, null, 0), this.formValidators.isValidRecipeIngredient);
+    (<FormArray>this.ingredientsForm.controls['children']).push(newIngredient);
   }
 
   onStepperChange(val: StepperSelectionEvent) {

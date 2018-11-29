@@ -29,26 +29,42 @@
                 </button>
             </form>
         </mat-step>
-        <mat-step>
-            <form>
+        <mat-step [stepControl]="ingredientsForm">
+            <form [formGroup]="ingredientsForm">
                 <ng-template matStepLabel>Ingredients</ng-template>
-                <app-recipie-ingredient 
+               <!--  <app-recipie-ingredient 
                     *ngFor="let i of this.ingredients"
                     [ingredientDeleted]="this.ingredientDeleted"
                     [recipeIngredient]="i">
-                </app-recipie-ingredient>
-
-               <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
-                   <fa-icon [icon]="faPlus"></fa-icon>
-                   Add ingredient</button>
-               <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved
-                    <fa-icon [icon]="faArrowRight"></fa-icon>
-               </button>
+                </app-recipie-ingredient> -->
+               
+                <div formArrayName="children">
+                    <app-recipe-ingredient                        
+                        *ngFor="let child of this.ingredientsForm.controls['children'].controls; let i = index"
+                        [ingredientDeleted] = "this.ingredientDeleted"
+                        [formControlName]="i">
+                    </app-recipe-ingredient>
+                    <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        Add ingredient</button>
+                    <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved
+                         <fa-icon [icon]="faArrowRight"></fa-icon>
+                    </button>
+                </div>
+                
+               
             </form>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Steps</ng-template>
             <app-recipie-step></app-recipie-step>
+            <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                Add Step
+            </button>
+            <button mat-button type="submit" matStepperNext class="float-right m-1">Contribute recipe
+                <fa-icon [icon]="faSave"></fa-icon>
+            </button>
         </mat-step>
     </mat-vertical-stepper>
 </div>

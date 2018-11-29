@@ -1,0 +1,37 @@
+<!-- <mat-card class="mb-1"> -->
+  <form ngForm #ingredient="ngForm">
+    <div class="row">
+        <div class="col-sm-4">
+            <mat-form-field class="w-100">
+                <input type="text" matInput placeholder="Ingredient" [matAutocomplete]="autoIng" name="ingredient" ngModel required>
+            </mat-form-field>
+            <mat-autocomplete #autoIng="matAutocomplete">
+                <mat-option *ngFor="let option of filteredIngredients | async" [value]="option.Description">
+                    {{option.Description}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-sm-2">
+            <mat-form-field class="w-100">
+                <input type="number" matInput placeholder="Units" name="qty" ngModel required>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+            <mat-form-field class="w-100">
+                <input type="text" matInput placeholder="Measurement" name="measurement" [matAutocomplete]="autoMeasurement" ngModel required>
+            </mat-form-field>
+            <mat-autocomplete #autoMeasurement="matAutocomplete">
+                <mat-option *ngFor="let option of filteredMeasurements | async" [value]="option.Description">
+                    {{option.Description}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col">
+            <button mat-icon-button color="warn" (click)="this.onRemove()" type="button">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </div>
+    </div>
+</form>
+
+<!-- </mat-card> -->

@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { RecipeIngredient } from '../core/recipies/models/recipe.model';
 
 export module FormValidatorFunctions {
 
@@ -54,5 +55,18 @@ export function isValidPassword(control: FormControl): {[s: string]: boolean} {
       return {'upperCaseCharacterMissing': true};
     }
     return null;
-  }
+}
+
+export function isValidRecipeIngredient(ctrl: FormControl): {[s: string]: boolean} {
+    // console.log(ctrl.value);
+    if ((<RecipeIngredient>ctrl.value).Ingredient_ == null ||
+        (<RecipeIngredient>ctrl.value).Ingredient_.Description === '') {
+        return {'ingredientRequired': true};
+    }
+    if ((<RecipeIngredient>ctrl.value).UnitOfMeasure_ == null ||
+        (<RecipeIngredient>ctrl.value).UnitOfMeasure_.Description === '') {
+        return {'measurementRequired': true};
+    }
+    return null;
+}
 }

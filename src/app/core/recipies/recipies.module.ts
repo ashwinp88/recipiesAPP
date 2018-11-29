@@ -18,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { RecipieIngredientComponent } from './recipie-ingredient/recipie-ingredient.component';
+import { RecipeIngredientComponent } from './recipe-ingredient/recipe-ingredient.component';
 import { RecipieStepComponent } from './recipie-step/recipie-step.component';
 import { MyRecipiesComponent } from './my-recipies/my-recipies.component';
 import { AddIngredientComponent } from './my-recipies/adminFunctions/add-ingredient/add-ingredient.component';
@@ -33,6 +33,7 @@ import { RecipieDetailComponent } from './recipie-detail/recipie-detail.componen
 import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-unit-of-measure/edit-unit-of-measure.component';
 import { IngredientService } from './services/ingredient.service';
 import { UnitOfMeasurementService } from './services/unit-of-measurement.service';
+// import { RecipeIngredientTryComponent } from './recipe-ingredient-try/recipe-ingredient-try.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { UnitOfMeasurementService } from './services/unit-of-measurement.service
     RecipieDetailComponent,
     RecipieCreateComponent,
     RecipiesSearchComponent,
-    RecipieIngredientComponent,
+    RecipeIngredientComponent,
     RecipieStepComponent,
     MyRecipiesComponent,
     AddIngredientComponent,
