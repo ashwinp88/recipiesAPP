@@ -46,8 +46,8 @@
                     </app-recipe-ingredient>
                     <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
                         <fa-icon [icon]="faPlus"></fa-icon>
-                        Add ingredient</button>
-                    <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved
+                        &nbsp;Add ingredient</button>
+                    <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved &nbsp;
                          <fa-icon [icon]="faArrowRight"></fa-icon>
                     </button>
                 </div>
@@ -55,16 +55,24 @@
                
             </form>
         </mat-step>
-        <mat-step>
-            <ng-template matStepLabel>Steps</ng-template>
-            <app-recipie-step></app-recipie-step>
-            <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
-                <fa-icon [icon]="faPlus"></fa-icon>
-                Add Step
-            </button>
-            <button mat-button type="submit" matStepperNext class="float-right m-1">Contribute recipe
-                <fa-icon [icon]="faSave"></fa-icon>
-            </button>
+        <mat-step [stepControl]="stepsForm">
+            <form [formGroup]="stepsForm" (ngSubmit)="this.createRecipe()">
+                <ng-template matStepLabel>Steps</ng-template>
+                <div formArrayName="children">
+                    <app-recipie-step
+                    *ngFor="let child of this.stepsForm.controls['children'].controls; let i = index"
+                    [stepDeleted]="this.stepDeleted"
+                    [formControlName]="i">                        
+                    </app-recipie-step>
+                    <button mat-button type="button" class="m-1" (click)="this.onAddStep()">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        &nbsp;Add Step
+                    </button>
+                    <button mat-button type="submit" matStepperNext class="float-right m-1">Contribute recipe &nbsp;
+                        <fa-icon [icon]="faSave"></fa-icon>
+                    </button>        
+                </div>
+            </form>
         </mat-step>
     </mat-vertical-stepper>
 </div>

@@ -4,7 +4,7 @@ import { DataService } from 'src/app/shared/data.service';
 import { Subject } from 'rxjs';
 
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { UnitOfMeasurement } from '../../../models/unit-of-measurement.model';
+import { UnitOfMeasurementModel } from '../../../models/unit-of-measurement.model';
 
 @Component({
   selector: 'app-edit-unit-of-measure',
@@ -14,8 +14,8 @@ import { UnitOfMeasurement } from '../../../models/unit-of-measurement.model';
 export class EditUnitOfMeasureComponent implements OnInit {
   faSync = faSync;
   faTimes = faTimes;
-  @Input() unitOfMeasurement: UnitOfMeasurement;
-  @Input() unitOfMeasurementDeleted: Subject<UnitOfMeasurement>;
+  @Input() unitOfMeasurement: UnitOfMeasurementModel;
+  @Input() unitOfMeasurementDeleted: Subject<UnitOfMeasurementModel>;
 
   private snackBarRef: MatSnackBarRef<any>;
 

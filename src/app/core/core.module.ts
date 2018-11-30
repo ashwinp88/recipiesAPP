@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +19,7 @@ import { RecipiesModule } from './recipies/recipies.module';
 import { AuthGuard } from '../shared/auth.guard';
 import { DataService } from '../shared/data.service';
 import { DialogComponent } from './dialog/dialog.component';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { DialogComponent } from './dialog/dialog.component';
     LogonComponent,
     HeaderComponent,
     ModalOkCancelComponent,
-    DialogComponent
+    DialogComponent,
+    LoadingScreenComponent
   ],
   imports: [
     CommonModule,
@@ -37,12 +40,13 @@ import { DialogComponent } from './dialog/dialog.component';
     RecipiesModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     HeaderComponent, SignupComponent, LogonComponent, NgbModule
   ],
   providers: [AuthService, NgbActiveModal, AuthGuard, DataService],
-  entryComponents: [ModalOkCancelComponent, DialogComponent]
+  entryComponents: [ModalOkCancelComponent, DialogComponent, LoadingScreenComponent]
 })
 export class CoreModule { }

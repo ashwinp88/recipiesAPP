@@ -3,7 +3,7 @@ import { faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
 import { Subject } from 'rxjs';
 
-import { Ingredient } from '../../../models/ingredient.model';
+import { IngredientModel } from '../../../models/ingredient.model';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
@@ -14,8 +14,8 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 export class EditIngredientComponent implements OnInit {
   faSync = faSync;
   faTimes = faTimes;
-  @Input() ingredient: Ingredient;
-  @Input() ingredientDeleted: Subject<Ingredient>;
+  @Input() ingredient: IngredientModel;
+  @Input() ingredientDeleted: Subject<IngredientModel>;
 
   private snackBarRef: MatSnackBarRef<any>;
 

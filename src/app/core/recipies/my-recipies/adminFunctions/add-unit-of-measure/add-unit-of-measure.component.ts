@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { HttpResponse } from '@angular/common/http';
-import { UnitOfMeasurement, UnitOfMeasurementResponse } from '../../../models/unit-of-measurement.model';
+import { UnitOfMeasurementModel, UnitOfMeasurementResponse } from '../../../models/unit-of-measurement.model';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class AddUnitOfMeasureComponent implements OnInit  {
   @ViewChild('searchUnitOfMeasurement') searchForm: NgForm;
   @ViewChild('paginator') paginator: MatPaginator;
 
-  unitOfMeasurementDeleted: Subject<UnitOfMeasurement>;
+  unitOfMeasurementDeleted: Subject<UnitOfMeasurementModel>;
   faSearch = faSearch;
   faPlus = faPlus;
 
@@ -39,9 +39,9 @@ export class AddUnitOfMeasureComponent implements OnInit  {
     this.pageEvent.pageSize = 5;
     this.pageEvent.pageIndex = 0;
 
-    this.unitOfMeasurementDeleted = new Subject<UnitOfMeasurement>();
+    this.unitOfMeasurementDeleted = new Subject<UnitOfMeasurementModel>();
     this.unitOfMeasurementDeleted.subscribe(
-      (deletedUnitofMeasurement: UnitOfMeasurement) => {
+      (deletedUnitofMeasurement: UnitOfMeasurementModel) => {
         const index = this.unitOfMeasurementSearchResults.UnitsOfMeasurements.indexOf(deletedUnitofMeasurement);
         if (index !== -1) {
           this.unitOfMeasurementSearchResults.UnitsOfMeasurements.splice(index, 1);

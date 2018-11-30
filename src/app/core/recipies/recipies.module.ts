@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -66,7 +67,8 @@ import { UnitOfMeasurementService } from './services/unit-of-measurement.service
     MatCardModule,
     MatStepperModule,
     MatAutocompleteModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [IngredientService, UnitOfMeasurementService]
 })

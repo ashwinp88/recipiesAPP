@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 
 import { AuthService } from './auth-service.service';
 import { Observable } from 'rxjs';
-import { Ingredient } from '../core/recipies/models/ingredient.model';
-import { UnitOfMeasurement } from '../core/recipies/models/unit-of-measurement.model';
-import { Recipe } from '../core/recipies/models/recipe.model';
+import { IngredientModel } from '../core/recipies/models/ingredient.model';
+import { UnitOfMeasurementModel } from '../core/recipies/models/unit-of-measurement.model';
+import { RecipeModel, CreateRecipeModel } from '../core/recipies/models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class DataService {
     return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
   }
 
-  editIngredient(ingredient: Ingredient) {
+  editIngredient(ingredient: IngredientModel) {
     const url = `${this.APIUrl}/api/Ingredients/${ingredient.ID}`;
     return this.httpClient.put(url, ingredient, { headers: this.httpHeader });
   }
@@ -83,7 +83,7 @@ export class DataService {
     return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
   }
 
-  editUOM(unitOfMEasurement: UnitOfMeasurement) {
+  editUOM(unitOfMEasurement: UnitOfMeasurementModel) {
     const url = `${this.APIUrl}/api/UnitsOfMeasure/${unitOfMEasurement.ID}`;
     return this.httpClient.put(url, unitOfMEasurement, { headers: this.httpHeader });
   }
@@ -93,7 +93,7 @@ export class DataService {
     return this.httpClient.delete(url, { headers: this.httpHeader });
   }
 
-  addRecipe(recipe: Recipe) {
+  addRecipe(recipe: CreateRecipeModel) {
     return this.httpClient.post(this.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
   }
 }

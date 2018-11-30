@@ -7,11 +7,12 @@ import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.
 import { Subscription } from 'rxjs';
 /* import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; */
 
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 /* import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component'; */
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { DialogComponent } from '../dialog/dialog.component';
+import { LoadingScreenComponent } from '../loading-screen/loading-screen.component';
 
 @Component({
   selector: 'app-logon',
@@ -24,6 +25,7 @@ export class LogonComponent implements OnInit, OnDestroy {
   faLock = faLock;
   formValidators = FormValidatorFunctions;
   errorMessage = 'Something went wrong!';
+  loadingRef: MatDialogRef<any>;
 
   private userValidatorSubscription: Subscription;
 
@@ -60,6 +62,7 @@ export class LogonComponent implements OnInit, OnDestroy {
     this.authService.logon(this.logonForm.get('usr').value,
       this.logonForm.get('password').value).subscribe(
         (res: HttpResponse<any>) => {
+          this.closeLoading();
           this.authService.uName = this.logonForm.get('usr').value;
           this.authService.authToken = res.body['access_token'];
           this.authService.isAuthorized = true;
@@ -77,9 +80,11 @@ export class LogonComponent implements OnInit, OnDestroy {
           this.openErrorModal();
         }
       );
+      this.showLoading();
   }
 
   openErrorModal() {
+    this.closeLoading();
     const dialogRef = this.dialog.open( DialogComponent, { data: {
       Title: 'Error logging in',
       Body: this.errorMessage,
@@ -90,5 +95,13 @@ export class LogonComponent implements OnInit, OnDestroy {
     /* modalRef.componentInstance.modalTitle = 'Error Logging in';
     modalRef.componentInstance.modalContent = this.errorMessage;
     modalRef.componentInstance.modalBtnCancelVisible = false; */
+  }
+
+  showLoading() {
+    this.loadingRef = this.dialog.open( LoadingScreenComponent );
+  }
+
+  closeLoading() {
+    this.loadingRef.close();
   }
 }

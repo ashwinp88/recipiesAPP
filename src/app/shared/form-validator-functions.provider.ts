@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { RecipeIngredient } from '../core/recipies/models/recipe.model';
+import { RecipeIngredient, RecipeStep } from '../core/recipies/models/recipe.model';
 
 export module FormValidatorFunctions {
 
@@ -59,13 +59,25 @@ export function isValidPassword(control: FormControl): {[s: string]: boolean} {
 
 export function isValidRecipeIngredient(ctrl: FormControl): {[s: string]: boolean} {
     // console.log(ctrl.value);
-    if ((<RecipeIngredient>ctrl.value).Ingredient_ == null ||
-        (<RecipeIngredient>ctrl.value).Ingredient_.Description === '') {
+    if ((<RecipeIngredient>ctrl.value).Ingredient == null ||
+        (<RecipeIngredient>ctrl.value).Ingredient.Description === '') {
         return {'ingredientRequired': true};
     }
-    if ((<RecipeIngredient>ctrl.value).UnitOfMeasure_ == null ||
-        (<RecipeIngredient>ctrl.value).UnitOfMeasure_.Description === '') {
+    if ((<RecipeIngredient>ctrl.value).UnitsOfMeasurement == null ||
+        (<RecipeIngredient>ctrl.value).UnitsOfMeasurement.Description === '') {
         return {'measurementRequired': true};
+    }
+    return null;
+}
+
+export function isValidRecipeStep(ctrl: FormControl): {[s: string]: boolean} {
+    if ((<RecipeStep>ctrl.value).StepTitle == null ||
+        (<RecipeStep>ctrl.value).StepTitle === '') {
+        return {'titleRequired': true};
+    }
+    if ((<RecipeStep>ctrl.value).StepInstructions == null ||
+        (<RecipeStep>ctrl.value).StepInstructions === '') {
+        return {'instructionsRequired': true};
     }
     return null;
 }

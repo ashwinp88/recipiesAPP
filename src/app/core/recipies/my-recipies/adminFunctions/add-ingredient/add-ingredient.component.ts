@@ -3,7 +3,7 @@ import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { DataService } from 'src/app/shared/data.service';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Ingredient, IngredientResponse } from '../../../models/ingredient.model';
+import { IngredientModel, IngredientResponse } from '../../../models/ingredient.model';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { HttpResponse } from '@angular/common/http';
@@ -19,7 +19,7 @@ export class AddIngredientComponent implements OnInit {
   @ViewChild('searchIngredients') searchForm: NgForm;
   @ViewChild('paginator') paginator: MatPaginator;
 
-  ingredientDeleted: Subject<Ingredient>;
+  ingredientDeleted: Subject<IngredientModel>;
   faSearch = faSearch;
   faPlus = faPlus;
 
@@ -39,9 +39,9 @@ export class AddIngredientComponent implements OnInit {
     this.pageEvent.pageSize = 5;
     this.pageEvent.pageIndex = 0;
 
-    this.ingredientDeleted = new Subject<Ingredient>();
+    this.ingredientDeleted = new Subject<IngredientModel>();
     this.ingredientDeleted.subscribe(
-      (deletedIngredient: Ingredient) => {
+      (deletedIngredient: IngredientModel) => {
         const index = this.ingredientSearchResults.Ingredients.indexOf(deletedIngredient);
         if (index !== -1) {
           this.ingredientSearchResults.Ingredients.splice(index, 1);

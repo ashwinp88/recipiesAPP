@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, forwardRef, OnDestroy, Input } from '@angular/core';
 import { IngredientService } from '../services/ingredient.service';
 import { UnitOfMeasurementService } from '../services/unit-of-measurement.service';
-import { Ingredient } from '../models/ingredient.model';
-import { UnitOfMeasurement } from '../models/unit-of-measurement.model';
+import { IngredientModel } from '../models/ingredient.model';
+import { UnitOfMeasurementModel } from '../models/unit-of-measurement.model';
 import { NgForm, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -31,8 +31,8 @@ OnInit, ControlValueAccessor, OnDestroy {
   recipeIngredient: RecipeIngredient;
   @ViewChild('ingredient') ingredientForm: NgForm;
   faTimes = faTimes;
-  filteredIngredients: Observable<Ingredient[]>;
-  filteredMeasurements: Observable<UnitOfMeasurement[]>;
+  filteredIngredients: Observable<IngredientModel[]>;
+  filteredMeasurements: Observable<UnitOfMeasurementModel[]>;
   ingredientValueChangeSubscription: Subscription;
   measurementValueChangeSubscription: Subscription;
   qtyChangeSubscription: Subscription;
@@ -55,8 +55,8 @@ OnInit, ControlValueAccessor, OnDestroy {
   }
 
   ngOnInit() {
-    this.filteredIngredients = new Observable<Ingredient[]>();
-    this.filteredMeasurements = new Observable<UnitOfMeasurement[]>();
+    this.filteredIngredients = new Observable<IngredientModel[]>();
+    this.filteredMeasurements = new Observable<UnitOfMeasurementModel[]>();
     setTimeout( this.addSubscriptions.bind(this), 0);
   }
 
@@ -80,9 +80,9 @@ OnInit, ControlValueAccessor, OnDestroy {
         this.filteredIngredients.pipe(
           map(ingredients =>
               (ingredients.length > 0 && value.toLowerCase() === ingredients[0].Description.toLowerCase()) ?
-              ingredients[0] : new Ingredient(0, value)
+              ingredients[0] : new IngredientModel(0, value)
              )).subscribe(val => {
-               this.recipeIngredient.Ingredient_ = val;
+               this.recipeIngredient.Ingredient = val;
                this.onChange(this.recipeIngredient);
              });
       }
@@ -102,20 +102,21 @@ OnInit, ControlValueAccessor, OnDestroy {
         this.filteredMeasurements.pipe(
           map(measures =>
               (measures.length > 0 && value.toLowerCase() === measures[0].Description.toLowerCase()) ?
-              measures[0] : new UnitOfMeasurement(0, value, value)
+              measures[0] : new UnitOfMeasurementModel(0, value, value)
              )).subscribe(val => {
-               this.recipeIngredient.UnitOfMeasure_ = val;
+               this.recipeIngredient.UnitsOfMeasurement = val;
                this.onChange(this.recipeIngredient);
              });
       }
     );
     this.qtyChangeSubscription = this.ingredientForm.controls['qty'].valueChanges.subscribe(
-      (val: number) => this.recipeIngredient.Qty = val
+      (val: number) => this.recipeIngredient.Quantity = val
     );
   }
 
   removeSubscription() {
     this.ingredientValueChangeSubscription.unsubscribe();
     this.measurementValueChangeSubscription.unsubscribe();
+    this.qtyChangeSubscription.unsubscribe();
   }
 }
