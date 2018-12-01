@@ -7,7 +7,7 @@ import { RecipeModel } from '../models/recipe.model';
   styleUrls: ['./recipie-list.component.css']
 })
 export class RecipieListComponent implements OnInit {
-  @Input() recipeList: RecipeModel[];
+  @Input() recipeList: { Recipe: RecipeModel, ImageLocation: string}[];
 
   constructor() { }
 

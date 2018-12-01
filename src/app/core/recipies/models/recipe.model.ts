@@ -33,7 +33,7 @@ export class RecipeStep {
     ) {}
 }
 
-export class RecipeImage {
+export class RecipeImageModel {
     constructor(
         public ImageType: number,
         public seq: number,
@@ -45,8 +45,20 @@ export class RecipeImage {
 export class CreateRecipeModel {
     constructor(
         public Recipe_: RecipeModel,
-        public RecipeImage_: RecipeImage,
+        public RecipeImage_: RecipeImageModel,
         public RecipeIngredients_: RecipeIngredient,
         public RecipeSteps_: RecipeStep
     ) {}
+}
+
+export class RecipeSearchResult {
+    constructor(
+        public UserRecipeBookMarks: any[],
+        public UserRecipeRatings: any[],
+        public Recipe: RecipeModel,
+        public RecipeImage: RecipeImageModel,
+        public RecipeDirections: RecipeStep[],
+        public RecipeIngredients: RecipeIngredient[]
+    ) {}
+
 }

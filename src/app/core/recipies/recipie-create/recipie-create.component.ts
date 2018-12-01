@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { RecipeModel, RecipeIngredient, RecipeStep, RecipeImage, CreateRecipeModel } from '../models/recipe.model';
+import { RecipeModel, RecipeIngredient, RecipeStep, RecipeImageModel, CreateRecipeModel } from '../models/recipe.model';
 import { AuthService } from 'src/app/shared/auth-service.service';
 import { DataService } from 'src/app/shared/data.service';
 import { Subject, Subscription } from 'rxjs';
@@ -138,7 +138,7 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
         this.recipeForm.controls['description'].value,
         this.authService.uID,
         true);
-      const recipeImage = new RecipeImage(0, 1, 0, this.imageLocation);
+      const recipeImage = new RecipeImageModel(0, 1, 0, this.imageLocation);
       const recipeIngredients = this.ingredientsForm.controls['children'].value;
       const recipeStep = this.stepsForm.controls['children'].value;
       const createRecipe = new CreateRecipeModel(recipe, recipeImage, recipeIngredients, recipeStep);

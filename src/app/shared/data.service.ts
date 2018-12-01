@@ -96,4 +96,10 @@ export class DataService {
   addRecipe(recipe: CreateRecipeModel) {
     return this.httpClient.post(this.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
   }
+
+  searchRecipesByTitle(searchQ: string) {
+    const httpParameters: HttpParams = new HttpParams().set(
+      'title', searchQ);
+    return this.httpClient.get(this.APIUrl + '/api/Recipes/Search', {headers: this.httpHeader, params: httpParameters});
+  }
 }

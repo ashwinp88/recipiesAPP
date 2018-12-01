@@ -1,12 +1,14 @@
-<div class="text-center text-white">
+<div *ngIf="this.recipeList!=null && (this.recipeList | async).length == 0;else search" class="text-center text-white">
     <div style="height:300px"></div>
     Start by typing something in the search field.
 </div>
-<!-- <div class="row m-2">
-  <div class="col-md-4">
-      <app-recipie-list></app-recipie-list>
-  </div>
-  <div class="col">
-      <app-recipie-detail></app-recipie-detail>
-  </div>
-</div> -->
+<ng-template #search>
+    <div class="row m-2 rounded bg-white">
+        <div class="col-md-4">
+            <app-recipie-list [recipeList]="(this.recipeList | async)"></app-recipie-list>
+        </div>
+        <div class="col">
+            <app-recipie-detail></app-recipie-detail>
+        </div>
+    </div>
+</ng-template>

@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'recipes', component: RecipiesComponent, children: [
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'search', component: RecipiesSearchComponent },
+    { path: 'search/:q', component: RecipiesSearchComponent },
     { path: 'new', canActivate: [AuthGuard], component: RecipieCreateComponent },
     { path: 'myRecipes', canActivate: [AuthGuard], component: MyRecipiesComponent },
     { path: 'myRecipes/addIngredient', canActivate: [AuthGuard], component: AddIngredientComponent },

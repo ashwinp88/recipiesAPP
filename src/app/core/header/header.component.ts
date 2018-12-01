@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { faUser, faUtensils, faBars, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
@@ -25,13 +25,14 @@ export class HeaderComponent implements OnInit {
   lookInCaption: string;
   selectedItems: string[];
   @ViewChild('dropDown') 'dropDown': NgbDropdown;
+  @ViewChild('search') searchField: ElementRef;
   isRecipiesPath$: Observable<boolean>;
   constructor(public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
-    this.lookInItems = ['Author', 'Description', 'Ingredients', 'Content'];
+    this.lookInItems = ['Author', 'Title', 'Ingredients', 'Content'];
     this.lookInCaption = 'Include';
-    this.selectedItems = [];
+    this.selectedItems = ['Title'];
     this.isRecipiesPath$ = this.router.events.pipe(filter(event => event instanceof NavigationStart)).pipe(
                               map(navigation => navigation['url'])
                             ).pipe(
@@ -57,4 +58,12 @@ export class HeaderComponent implements OnInit {
     eventData.stopPropagation();
     elemmentRef.checked = !elemmentRef.checked;
   }
+
+  onSearch() {
+    const searchBoxValue = this.searchField.nativeElement.value;
+    if (searchBoxValue && searchBoxValue.length >= 3) {
+      this.router.navigate(['/recipes', 'search'], { queryParams: { searchQ : searchBoxValue, lookIn: this.selectedItems}});
+    }
+  }
+
 }
