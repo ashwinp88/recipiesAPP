@@ -1,34 +1,22 @@
-<mat-list>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let recipe of this.recipeList">
+        <mat-expansion-panel-header collapsedHeight="75px" expandedHeight="75px">
+            <mat-panel-title>
+             <strong>{{ this.recipe.Recipe.Title }}</strong>
+            </mat-panel-title>
+            <mat-panel-description>
+                <p>{{ this.recipe.Recipe.Description | slice : 0 : this.briefDescMaxChars }}..</p>                
+            </mat-panel-description>
+            <p class="float-right">Rating : N/A</p>
+          </mat-expansion-panel-header>
+          <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<!-- <mat-list>
     <mat-list-item *ngFor="let recipe of this.recipeList">
         <img *ngIf="recipe.ImageLocation" matListAvatar [src]="recipe.ImageLocation">
         <h3 matLine>{{ recipe.Recipe.Title }}</h3>
         <p matLine> {{ recipe.Recipe.Description }} </p>
     </mat-list-item>
-</mat-list>
-
-<!-- <div class="list-group">
-    <a class="list-group-item list-group-item-action flex-column align-items-start active">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small>Donec id elit non mi porta.</small>
-    </a>
-    <a class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </a>
-    <a class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </a>
-</div> -->
+</mat-list> -->

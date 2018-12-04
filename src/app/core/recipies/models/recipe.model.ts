@@ -17,7 +17,7 @@ export class RecipeIngredient {
     constructor(
         public Recipe: RecipeModel,
         public Ingredient: IngredientModel,
-        public UnitsOfMeasurement: UnitOfMeasurementModel,
+        public UnitOfMeasurement: UnitOfMeasurementModel,
         public Quantity: number
     ) {}
 }
@@ -46,8 +46,8 @@ export class CreateRecipeModel {
     constructor(
         public Recipe_: RecipeModel,
         public RecipeImage_: RecipeImageModel,
-        public RecipeIngredients_: RecipeIngredient,
-        public RecipeSteps_: RecipeStep
+        public RecipeIngredients_: RecipeIngredient[],
+        public RecipeSteps_: RecipeStep[]
     ) {}
 }
 

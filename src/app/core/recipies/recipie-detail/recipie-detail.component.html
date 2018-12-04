@@ -1,4 +1,24 @@
-<div class="card bg-light">
+<h5 class="text-center"> {{this.recipe.Recipe.Title}} </h5>
+<div class="d-flex justify-content-center">
+    <img class="img-responsive" style="max-height: 500px" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation" [src]="this.recipe.RecipeImage.ImageLocation">
+</div>
+
+<p>{{this.recipe.Recipe.Description}}</p>
+<div *ngIf="this.recipe.RecipeIngredients && this.recipe.RecipeIngredients.length > 0">
+  <div *ngFor="let ingredient of this.recipe.RecipeIngredients">
+      <p>{{ ingredient.Ingredient.Description }} - {{ ingredient.Quantity }} {{ ingredient.UnitOfMeasurement.Description }}</p>
+  </div>  
+</div>
+<div *ngIf="this.recipe.RecipeDirections && this.recipe.RecipeDirections.length > 0">
+   <p *ngFor="let step of this.recipe.RecipeDirections">
+    <strong>Step {{ step.Step }} : </strong>{{ step.StepTitle }}
+    <br>
+    {{ step.StepInstructions }}
+  </p>
+</div>
+
+
+<!-- <div class="card bg-light">
   <div class="card-header">Header</div>
   <div class="card-body">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
     classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
@@ -12,4 +32,4 @@
     and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
     accompanied by English versions from the 1914 translation by H. Rackham.</div>
   <div class="card-footer">Footer</div>
-</div>
+</div> -->
