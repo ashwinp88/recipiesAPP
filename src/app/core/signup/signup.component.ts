@@ -9,9 +9,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 /* import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; */
 /* import { ModalOkCancelComponent } from '../modal-ok-cancel/modal-ok-cancel.component'; */
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.provider';
 import { DialogComponent } from '../dialog/dialog.component';
+import { LoadingScreenComponent } from '../loading-screen/loading-screen.component';
 
 @Component({
   selector: 'app-signup',
@@ -28,6 +29,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   signingUp = false;
   signupForm: FormGroup;
   errorMessage = 'Something went wrong!';
+  loadingRef: MatDialogRef<any>;
 
   private emailValidatorSubscription: Subscription;
   private passwordValidatorSubscription: Subscription;
@@ -82,16 +84,21 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.authService.signup(this.signupForm.get('usr').value,
                             this.signupForm.get('email').value,
                             this.signupForm.get('password').value).subscribe(
-      (value) => {},
+      (value) => {
+        this.closeLoading();
+      },
       (errorValue: HttpErrorResponse) => {
+        this.closeLoading();
         this.signingUp = false;
         this.errorMessage =  errorValue.error['Message'];
         this.openErrorModal();
       },
       () => {
+        this.closeLoading();
         this.openSuccessModal();
      }
     );
+    this.showLoading();
   }
 
   isvalidConfirmPassword(control: FormControl): {[s: string]: boolean} {
@@ -113,14 +120,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       () => this.router.navigate(['/logon']),
       () => this.router.navigate(['/logon'])
     );
-   /*  modalRef.componentInstance.modalTitle = 'Registration Success!';
-    modalRef.componentInstance.modalContent = 'You will be taken to the login page.';
-    modalRef.componentInstance.modalOkBtnCaption = 'Take Me';
-    modalRef.componentInstance.modalBtnCancelVisible = false; */
-    /* modalRef.result.then(
-      () => this.router.navigate(['/logon']),
-      () => this.router.navigate(['/logon'])
-    ); */
   }
 
   openErrorModal() {
@@ -131,9 +130,15 @@ export class SignupComponent implements OnInit, OnDestroy {
       CancelBtnCaption: 'Cancel',
       CancelBtnVisible : false
     } });
-  /*  const modalRef: NgbModalRef = this.modalService.open(ModalOkCancelComponent, { centered: true });
-   modalRef.componentInstance.modalTitle = 'Registration Error!';
-   modalRef.componentInstance.modalContent = this.errorMessage;
-   modalRef.componentInstance.modalBtnCancelVisible = false; */
+  }
+
+  showLoading() {
+    this.loadingRef = this.dialog.open( LoadingScreenComponent );
+  }
+
+  closeLoading() {
+    if (this.loadingRef != null) {
+      this.loadingRef.close();
+    }
   }
 }

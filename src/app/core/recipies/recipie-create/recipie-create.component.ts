@@ -34,7 +34,12 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
   stepSubscription: Subscription;
   formValidators = FormValidatorFunctions;
   loadingRef: MatDialogRef<any>;
-
+  get stepsFormArray(): FormArray {
+    return  <FormArray>this.stepsForm.controls['children'];
+  }
+  get ingredientsFormArray(): FormArray {
+    return  <FormArray>this.ingredientsForm.controls['children'];
+  }
   constructor(
     private authService: AuthService,
     private dataService: DataService,

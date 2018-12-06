@@ -1,5 +1,5 @@
 <div class="container" style="height: 100%;">
-    <div style="min-height:200px"></div>
+    <div style="min-height:100px"></div>
     <div class="row">
         <div class="col-sm-7 col-md-5">
             <form [formGroup]="signupForm" (ngSubmit)="onSignUp()">
@@ -42,7 +42,7 @@
                         <button type="button" class="btn btn-outline-light btn-block" [routerLink]="['/logon']">Login</button>
                     </div>
                     <div class="col-sm-7 mb-3">
-                        <button type="submit" [disabled]="!this.signupForm.valid && !this.signingUp" class="btn btn-outline-light btn-block">Reister</button>
+                        <button type="submit" [disabled]="!this.signupForm.valid && !this.signingUp" class="btn btn-outline-light btn-block">Register</button>
                     </div>
                 </div>
             </form>

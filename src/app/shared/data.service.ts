@@ -11,7 +11,8 @@ import { RecipeModel, CreateRecipeModel } from '../core/recipies/models/recipe.m
   providedIn: 'root'
 })
 export class DataService {
-  private APIUrl = 'http://localhost:59797';
+  // private APIUrl = 'http://localhost:59797';
+  private APIUrl = 'http://recipesapi.gearhostpreview.com/recipesAPI';
   private httpHeader: HttpHeaders = new HttpHeaders(
     {
       'Content-Type': 'application/json',

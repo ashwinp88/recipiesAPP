@@ -41,7 +41,7 @@
                
                 <div formArrayName="children">
                     <app-recipe-ingredient                        
-                        *ngFor="let child of this.ingredientsForm.controls['children'].controls; let i = index"
+                        *ngFor="let child of this.ingredientsFormArray.controls; let i = index"
                         [ingredientDeleted] = "this.ingredientDeleted"
                         [formControlName]="i">
                     </app-recipe-ingredient>
@@ -61,7 +61,7 @@
                 <ng-template matStepLabel>Steps</ng-template>
                 <div formArrayName="children">
                     <app-recipie-step
-                    *ngFor="let child of this.stepsForm.controls['children'].controls; let i = index"
+                    *ngFor="let child of this.stepsFormArray.controls; let i = index"
                     [stepDeleted]="this.stepDeleted"
                     [formControlName]="i">                        
                     </app-recipie-step>
