@@ -18,6 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -36,6 +38,7 @@ import { RecipieDetailComponent } from './recipie-detail/recipie-detail.componen
 import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-unit-of-measure/edit-unit-of-measure.component';
 import { IngredientService } from './services/ingredient.service';
 import { UnitOfMeasurementService } from './services/unit-of-measurement.service';
+import { RecipeStepDisplayComponent } from './recipe-step-display/recipe-step-display.component';
 // import { RecipeIngredientTryComponent } from './recipe-ingredient-try/recipe-ingredient-try.component';
 
 @NgModule({
@@ -51,7 +54,8 @@ import { UnitOfMeasurementService } from './services/unit-of-measurement.service
     AddIngredientComponent,
     AddUnitOfMeasureComponent,
     EditIngredientComponent,
-    EditUnitOfMeasureComponent],
+    EditUnitOfMeasureComponent,
+    RecipeStepDisplayComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -72,7 +76,9 @@ import { UnitOfMeasurementService } from './services/unit-of-measurement.service
     MatButtonModule,
     MatProgressSpinnerModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule,
+    MatChipsModule
   ],
   providers: [IngredientService, UnitOfMeasurementService]
 })

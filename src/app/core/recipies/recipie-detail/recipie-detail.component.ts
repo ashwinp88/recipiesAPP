@@ -8,6 +8,7 @@ import { RecipeSearchResult } from '../models/recipe.model';
 })
 export class RecipieDetailComponent implements OnInit {
   @Input() recipe: RecipeSearchResult;
+  displayColumns: string[] = ['ingredient', 'qty', 'measure'];
   constructor() { }
 
   ngOnInit() {

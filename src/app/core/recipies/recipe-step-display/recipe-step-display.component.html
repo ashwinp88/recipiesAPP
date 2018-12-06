@@ -1,0 +1,18 @@
+<mat-card class="m-1">    
+  <mat-card-header>
+    <mat-card-title>
+      Step {{ this.recipeStep.Step }}
+    </mat-card-title>    
+    <mat-card-subtitle>
+      {{ this.recipeStep.StepTitle }}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+      <div>
+        {{ this.recipeStep.StepInstructions }}
+      </div>
+  </mat-card-content>
+  <mat-card-footer class="text-right mr-3">
+    <fa-icon [icon]="faClock"></fa-icon> {{ this.recipeStep.TimeSpanHours }} hours {{ this.recipeStep.TimeSpanMinutes }} minutes
+  </mat-card-footer>
+</mat-card>

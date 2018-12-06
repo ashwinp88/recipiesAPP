@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, OnChanges, OnDestroy } from '@angular/core';
 
 import { faUser, faUtensils, faBars, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'src/app/shared/auth-service.service';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { Router, NavigationStart } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 
@@ -14,7 +14,7 @@ import { map, filter } from 'rxjs/operators';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   faUser = faUser;
   faUtensils = faUtensils;
   faBars = faBars;
@@ -27,6 +27,10 @@ export class HeaderComponent implements OnInit {
   @ViewChild('dropDown') 'dropDown': NgbDropdown;
   @ViewChild('search') searchField: ElementRef;
   isRecipiesPath$: Observable<boolean>;
+  captionsVisible = true;
+  menuOpen = false;
+  subscription: Subscription;
+
   constructor(public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
@@ -38,6 +42,13 @@ export class HeaderComponent implements OnInit {
                             ).pipe(
                               map(url => url.toString().includes('recipes'))
                             );
+    this.subscription = this.router.events.subscribe(
+      () => this.menuOpen = false
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onLookInChange(elem: HTMLInputElement, checked: boolean) {
@@ -66,4 +77,19 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  @HostListener('window:resize', ['$event']) onResize(event) {
+    this.showHideCaptions();
+  }
+
+  showHideCaptions() {
+    if (window.innerWidth <= 1200 && window.innerWidth > 768) {
+      this.captionsVisible = false;
+    } else {
+      this.captionsVisible = true;
+    }
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 }

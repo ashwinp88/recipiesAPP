@@ -1,22 +1,12 @@
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let recipe of this.recipeList">
-        <mat-expansion-panel-header collapsedHeight="75px" expandedHeight="75px">
-            <mat-panel-title>
-             <strong>{{ this.recipe.Recipe.Title }}</strong>
-            </mat-panel-title>
-            <mat-panel-description>
-                <p>{{ this.recipe.Recipe.Description | slice : 0 : this.briefDescMaxChars }}..</p>                
-            </mat-panel-description>
-            <p class="float-right">Rating : N/A</p>
+    <mat-expansion-panel *ngFor="let recipe of this.recipeList">       
+          <mat-expansion-panel-header>              
+                <strong class="w-75 h-100 align-self-center">{{ this.recipe.Recipe.Title }}</strong>
+                <span class="w-25 h-100 text-right align-self-center">contributed by {{ this.recipe.Recipe.CreatedByUser }}</span>
+                <span class="badge badge-secondary float-right px-1 m-2" style="width:50px">            
+                        {{ this.recipe.Recipe.AverageRecipeRating }} / 5 
+                </span>
           </mat-expansion-panel-header>
           <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
     </mat-expansion-panel>
 </mat-accordion>
-
-<!-- <mat-list>
-    <mat-list-item *ngFor="let recipe of this.recipeList">
-        <img *ngIf="recipe.ImageLocation" matListAvatar [src]="recipe.ImageLocation">
-        <h3 matLine>{{ recipe.Recipe.Title }}</h3>
-        <p matLine> {{ recipe.Recipe.Description }} </p>
-    </mat-list-item>
-</mat-list> -->

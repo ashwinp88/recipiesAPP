@@ -5,7 +5,7 @@
                 <ng-template matStepLabel>General Information</ng-template>
                 <mat-form-field class="w-100">
                     <h2>
-                        <input matInput formControlName="title" placeholder="Recipe title" required>
+                        <input matInput formControlName="title" placeholder="Recipe title" required autocomplete="off">
                     </h2>
                 </mat-form-field>
                 <mat-form-field class="w-100">
@@ -22,7 +22,8 @@
                         matInput 
                         placeholder="url for the recipe's main image" 
                         formControlName="img"
-                        name="imageloc">
+                        name="imageloc"
+                        autocomplete="off">
                 </mat-form-field>
                 <button mat-button type="submit" matStepperNext class="float-right">Choose ingredients
                     <fa-icon [icon]="faArrowRight"></fa-icon>

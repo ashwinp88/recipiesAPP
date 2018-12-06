@@ -7,9 +7,9 @@ export class RecipeModel {
         public Description: string,
         public CreatedByUser: string,
         public Complete: boolean,
-        TotalTimeNeededHours?: number,
-        TotalTimeNeededMinutes?: number,
-        AverageRecipeRating?: number
+        public TotalTimeNeededHours?: number,
+        public TotalTimeNeededMinutes?: number,
+        public AverageRecipeRating?: number
     ) {}
 }
 

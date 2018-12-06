@@ -1,4 +1,34 @@
-<h5 class="text-center"> {{this.recipe.Recipe.Title}} </h5>
+<div class="row">
+  <div class="col-md-6">
+      <img class="rounded w-100" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation" [src]="this.recipe.RecipeImage.ImageLocation">
+  </div>
+  <div class="col-md-6 align-self-center">
+    <p>{{this.recipe.Recipe.Description}}</p>      
+  </div>
+</div>
+<div>
+  <table mat-table [dataSource]="this.recipe.RecipeIngredients" class="w-100" >
+      <ng-container matColumnDef="ingredient">
+          <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+          <td mat-cell *matCellDef="let ing"> {{ing.Ingredient.Description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="qty">
+            <th mat-header-cell *matHeaderCellDef> Qty </th>
+            <td mat-cell *matCellDef="let ing"> {{ing.Quantity}} </td>
+        </ng-container>
+        <ng-container matColumnDef="measure">
+            <th mat-header-cell *matHeaderCellDef> Measurement </th>
+            <td mat-cell *matCellDef="let ing"> {{ing.UnitOfMeasurement.Description}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+  </table>
+  <app-recipe-step-display *ngFor="let step of this.recipe.RecipeDirections" [recipeStep]=step></app-recipe-step-display>
+</div>
+
+
+
+<!-- <h5 class="text-center"> {{this.recipe.Recipe.Title}} </h5>
 <div class="d-flex justify-content-center">
     <img class="img-responsive" style="max-height: 500px" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation" [src]="this.recipe.RecipeImage.ImageLocation">
 </div>
@@ -15,21 +45,4 @@
     <br>
     {{ step.StepInstructions }}
   </p>
-</div>
-
-
-<!-- <div class="card bg-light">
-  <div class="card-header">Header</div>
-  <div class="card-body">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-    classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
-    Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
-    passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem
-    Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-    Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The
-    first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32
-    and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
-    accompanied by English versions from the 1914 translation by H. Rackham.</div>
-  <div class="card-footer">Footer</div>
 </div> -->

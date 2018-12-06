@@ -5,10 +5,10 @@
         </a>
     </div>
 
-    <button class="navbar-toggler">
+    <button class="navbar-toggler" (click)="this.toggleMenu()">
         <fa-icon [icon]="faBars" class="text-white"></fa-icon>
     </button>
-    <div class="collapse navbar-collapse show">
+    <div class="collapse navbar-collapse" [ngClass]="{'show': this.menuOpen}">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" *ngIf="this.isRecipiesPath$ | async" >
                 <div class="d-flex">
@@ -32,19 +32,20 @@
             </li>            
             <li class="nav-item" *ngIf="(this.isRecipiesPath$ | async) && this.authService.isAuthorized">
                 <a class="nav-link text-white mx-1" [routerLink]="['/recipes','new']">
-                    <fa-icon [icon]="faPlus"></fa-icon> Contribute a recipe
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                    <span *ngIf="this.captionsVisible"> Contribute a recipe</span>
                 </a>
             </li>
             <li class="nav-item" *ngIf="this.authService.isAuthorized">
                 <a class="nav-link text-white mx-1" [routerLink]="['/recipes','myRecipes']">
                     <fa-icon [icon]="faUser"></fa-icon>
-                    {{ this.authService.uName }}'s account
+                    <span *ngIf="this.captionsVisible"> {{ this.authService.uName }}'s account</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white mx-1" [routerLink]="['/recipes']">
                     <fa-icon [icon]="faUtensils"></fa-icon>
-                    Recipies
+                    <span *ngIf="this.captionsVisible"> Recipies</span>
                 </a>
             </li>
         </ul>

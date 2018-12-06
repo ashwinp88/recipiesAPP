@@ -1,5 +1,8 @@
 <!-- <mat-card class="mb-1"> -->
   <form ngForm #ingredient="ngForm">
+        <button mat-icon-button class="float-right" color="warn" (click)="this.onRemove()" type="button">
+                <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
     <div class="row">
         <div class="col-sm-4">
             <mat-form-field class="w-100">
@@ -25,12 +28,7 @@
                     {{option.Description}}
                 </mat-option>
             </mat-autocomplete>
-        </div>
-        <div class="col">
-            <button mat-icon-button color="warn" (click)="this.onRemove()" type="button">
-                <fa-icon [icon]="faTimes"></fa-icon>
-            </button>
-        </div>
+        </div>        
     </div>
 </form>
 

@@ -13,6 +13,7 @@ export class RecipieListComponent implements OnInit {
 
   ngOnInit() {
     this.setCharsSize();
+    // console.log(this.recipeList);
   }
 
   @HostListener('window:resize', ['$event']) onResize(event) {

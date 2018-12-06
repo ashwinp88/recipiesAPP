@@ -93,9 +93,7 @@ OnInit, ControlValueAccessor, OnDestroy {
           map(measurements => measurements
             .filter(
               m => m.Description.toLowerCase()
-                .startsWith(value.toLowerCase()) ||
-                m.Abbreviation.toLowerCase()
-                  .startsWith(value.toLowerCase())
+                .startsWith(value.toLowerCase())
             )
           )
         );
@@ -104,7 +102,7 @@ OnInit, ControlValueAccessor, OnDestroy {
               (measures.length > 0 && value.toLowerCase() === measures[0].Description.toLowerCase()) ?
               measures[0] : new UnitOfMeasurementModel(0, value, value)
              )).subscribe(val => {
-               this.recipeIngredient.UnitsOfMeasurement = val;
+               this.recipeIngredient.UnitOfMeasurement = val;
                this.onChange(this.recipeIngredient);
              });
       }

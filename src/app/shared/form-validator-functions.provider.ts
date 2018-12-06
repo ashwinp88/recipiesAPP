@@ -63,8 +63,8 @@ export function isValidRecipeIngredient(ctrl: FormControl): {[s: string]: boolea
         (<RecipeIngredient>ctrl.value).Ingredient.Description === '') {
         return {'ingredientRequired': true};
     }
-    if ((<RecipeIngredient>ctrl.value).UnitsOfMeasurement == null ||
-        (<RecipeIngredient>ctrl.value).UnitsOfMeasurement.Description === '') {
+    if ((<RecipeIngredient>ctrl.value).UnitOfMeasurement == null ||
+        (<RecipeIngredient>ctrl.value).UnitOfMeasurement.Description === '') {
         return {'measurementRequired': true};
     }
     return null;
