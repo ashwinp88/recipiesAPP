@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/auth-service.service';
 import { DataService } from 'src/app/shared/data.service';
 import { Subject, Subscription } from 'rxjs';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { faPlus, faArrowRight, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faArrowRight, faSave, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FormValidatorFunctions } from 'src/app/shared/form-validator-functions.provider';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { LoadingScreenComponent } from '../../loading-screen/loading-screen.component';
@@ -22,6 +22,7 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
   faArrowRight = faArrowRight;
   faSave = faSave;
+  faCamera = faCamera;
   recipe: RecipeModel;
   imageLocation: string;
   linear = true;

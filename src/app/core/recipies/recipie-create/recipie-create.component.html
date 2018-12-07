@@ -1,4 +1,4 @@
-<div class="bg-white container rounded my-5 py-3">
+<div class="bg-white rounded my-5 py-3">
     <mat-vertical-stepper [linear]="this.linear" (selectionChange)="this.onStepperChange($event)">
         <mat-step [stepControl]="recipeForm">
             <form [formGroup]="recipeForm">
@@ -16,15 +16,17 @@
                         required>
                     </textarea>
                 </mat-form-field>
-                <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">
-                <mat-form-field class="w-100">
-                    <input type="url" 
-                        matInput 
-                        placeholder="url for the recipe's main image" 
-                        formControlName="img"
-                        name="imageloc"
-                        autocomplete="off">
-                </mat-form-field>
+                <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">              
+                <div class="d-flex">
+                    <mat-form-field class="w-100 mr-3">
+                            <input type="url" matInput placeholder="url for the recipe's main image" formControlName="img" name="imageloc"
+                                autocomplete="off">
+                    </mat-form-field>
+                    <!-- <button class="m-3" mat-raised-button color="primary" type="button" (click)="imgInput.click()"></button> -->
+                    <a (click)="imgInput.click()"><fa-icon [icon]="faCamera" size="2x"></fa-icon></a>
+                    <input hidden type="file" placeholder="url for the recipe's main image" formControlName="img" accept="image/*" name="imageloc"
+                        autocomplete="off" #imgInput>
+                </div>
                 <button mat-button type="submit" matStepperNext class="float-right">Choose ingredients
                     <fa-icon [icon]="faArrowRight"></fa-icon>
                 </button>

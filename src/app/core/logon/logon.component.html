@@ -3,32 +3,41 @@
     <div class="row">
         <div class="col-md-7 col-lg-5">
             <form [formGroup]="logonForm" (ngSubmit)="onLogon($event)">
-                <div class="input-group" [ngClass]="{'mb-3': this.logonForm.get('usr').valid || this.logonForm.get('usr').untouched}">
-                    <div class="input-group-prepend">
-                        <fa-icon [icon]="faUser" class="input-group-text"></fa-icon>
-                    </div>
-                    <input type="text" class="form-control bg-transparent text-white" placeholder="username"
-                        id="usr" name="username" formControlName="usr" (onchange)="this.errorMessage=''">
-                </div>
-                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.logonForm.get('usr').valid && this.logonForm.get('usr').touched">
-                        {{ this.formValidators.getErrorForControl('usr', logonForm) }}
-                </label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <fa-icon [icon]="faLock" class="input-group-text"></fa-icon>
-                    </div>
-                    <input type="password" class="form-control bg-transparent text-white" placeholder="password" id="pwd"
-                        name="password" formControlName="password">
-                </div>
-                <label class="form-control form-control-sm text-white bg-transparent" *ngIf="!this.logonForm.get('password').valid && this.logonForm.get('password').touched">
-                        {{ this.formValidators.getErrorForControl('password', logonForm) }}
-                </label>
+                <mat-form-field class="w-100">
+                        <input type="text" 
+                            class="w-100"
+                            matInput 
+                            placeholder="username"
+                            id="usr" 
+                            name="username" 
+                            formControlName="usr" 
+                            (onchange)="this.errorMessage=''">
+                            <mat-icon matSuffix >face</mat-icon>
+                            <mat-error
+                            *ngIf="!this.logonForm.get('usr').valid && this.logonForm.get('usr').touched">
+                                {{ this.formValidators.getErrorForControl('usr', logonForm) }}
+                            </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                        <input matInput
+                            type="password" 
+                            class="w-100" 
+                            placeholder="password" 
+                            id="pwd"
+                            name="password" 
+                            formControlName="password">
+                            <mat-icon matSuffix >lock</mat-icon>
+                            <mat-error
+                            *ngIf="!this.logonForm.get('password').valid && this.logonForm.get('password').touched">
+                                    {{ this.formValidators.getErrorForControl('password', logonForm) }}
+                            </mat-error>
+                </mat-form-field>
                 <div class="row">
                     <div class="col-sm-5 mb-3">
-                        <button class="btn btn-outline-light btn-block" type="button" [routerLink]="['/signup']">Signup</button>
+                        <button class="w-100" mat-raised-button type="button" [routerLink]="['/signup']">Signup</button>
                     </div>
                     <div class="col-sm-7 mb-3">
-                        <button class="btn btn-outline-light btn-block" type="submit" [disabled]="!this.logonForm.valid">Logon</button>
+                        <button class="w-100" mat-raised-button color="primary" type="submit" [disabled]="!this.logonForm.valid">Logon</button>
                     </div>
                 </div>
             </form>

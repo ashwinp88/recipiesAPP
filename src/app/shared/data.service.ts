@@ -2,17 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 
 import { AuthService } from './auth-service.service';
-import { Observable } from 'rxjs';
 import { IngredientModel } from '../core/recipies/models/ingredient.model';
 import { UnitOfMeasurementModel } from '../core/recipies/models/unit-of-measurement.model';
-import { RecipeModel, CreateRecipeModel } from '../core/recipies/models/recipe.model';
+import { CreateRecipeModel } from '../core/recipies/models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  // private APIUrl = 'http://localhost:59797';
-  private APIUrl = 'http://recipesapi.gearhostpreview.com/recipesAPI';
   private httpHeader: HttpHeaders = new HttpHeaders(
     {
       'Content-Type': 'application/json',
@@ -24,11 +21,11 @@ export class DataService {
 
   addIngredient(ingredient: string) {
     const postBody = { 'Description': ingredient };
-    return this.httpClient.post(this.APIUrl + '/api/Ingredients', postBody, { headers: this.httpHeader });
+    return this.httpClient.post(this.authService.APIUrl + '/api/Ingredients', postBody, { headers: this.httpHeader });
   }
 
   getAllIngredients(pageSize: string, pageNumber: string) {
-    const url = `${this.APIUrl}/api/Ingredients/`;
+    const url = `${this.authService.APIUrl}/api/Ingredients/`;
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
@@ -36,12 +33,12 @@ export class DataService {
   }
 
   getIngredientsNoPaging() {
-    const url = `${this.APIUrl}/api/Ingredients/`;
+    const url = `${this.authService.APIUrl}/api/Ingredients/`;
     return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
   }
 
   getIngredientsByName(ingredient: string, pageSize: string, pageNumber: string) {
-    const url = `${this.APIUrl}/api/Ingredients/${ingredient}`;
+    const url = `${this.authService.APIUrl}/api/Ingredients/${ingredient}`;
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
@@ -49,22 +46,22 @@ export class DataService {
   }
 
   editIngredient(ingredient: IngredientModel) {
-    const url = `${this.APIUrl}/api/Ingredients/${ingredient.ID}`;
+    const url = `${this.authService.APIUrl}/api/Ingredients/${ingredient.ID}`;
     return this.httpClient.put(url, ingredient, { headers: this.httpHeader });
   }
 
   deleteIngredient(id: number) {
-    const url = `${this.APIUrl}/api/Ingredients/${id}`;
+    const url = `${this.authService.APIUrl}/api/Ingredients/${id}`;
     return this.httpClient.delete(url, { headers: this.httpHeader });
   }
 
   addUOM(description: string, abbreviation: string) {
     const postBody = { 'Description': description, 'Abbreviation': abbreviation };
-    return this.httpClient.post(this.APIUrl + '/api/UnitsOfMeasure', postBody, { headers: this.httpHeader });
+    return this.httpClient.post(this.authService.APIUrl + '/api/UnitsOfMeasure', postBody, { headers: this.httpHeader });
   }
 
   getAllUOM(pageSize: string, pageNumber: string) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasure/`;
+    const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/`;
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
@@ -72,12 +69,12 @@ export class DataService {
   }
 
   getAllUOMNoPaging() {
-    const url = `${this.APIUrl}/api/UnitsOfMeasure/`;
+    const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/`;
     return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
   }
 
   getUOMByName(name: string, pageSize: string, pageNumber: string) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasurements/${name}`;
+    const url = `${this.authService.APIUrl}/api/UnitsOfMeasurements/${name}`;
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
@@ -85,22 +82,22 @@ export class DataService {
   }
 
   editUOM(unitOfMEasurement: UnitOfMeasurementModel) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasure/${unitOfMEasurement.ID}`;
+    const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/${unitOfMEasurement.ID}`;
     return this.httpClient.put(url, unitOfMEasurement, { headers: this.httpHeader });
   }
 
   deleteUOM(id: number) {
-    const url = `${this.APIUrl}/api/UnitsOfMeasure/${id}`;
+    const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/${id}`;
     return this.httpClient.delete(url, { headers: this.httpHeader });
   }
 
   addRecipe(recipe: CreateRecipeModel) {
-    return this.httpClient.post(this.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
+    return this.httpClient.post(this.authService.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
   }
 
   searchRecipesByTitle(searchQ: string) {
     const httpParameters: HttpParams = new HttpParams().set(
       'title', searchQ);
-    return this.httpClient.get(this.APIUrl + '/api/Recipes/Search', {headers: this.httpHeader, params: httpParameters});
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Search', {headers: this.httpHeader, params: httpParameters});
   }
 }

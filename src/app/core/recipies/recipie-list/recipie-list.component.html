@@ -2,7 +2,7 @@
     <mat-expansion-panel *ngFor="let recipe of this.recipeList">       
           <mat-expansion-panel-header>              
                 <strong class="w-75 h-100 align-self-center">{{ this.recipe.Recipe.Title }}</strong>
-                <span class="w-25 h-100 text-right align-self-center">contributed by {{ this.recipe.Recipe.CreatedByUser }}</span>
+                <span class="w-25 h-100 text-right align-self-center">by {{ this.recipe.Recipe.CreatedByUser }}</span>
                 <span class="badge badge-secondary float-right px-1 m-2" style="width:50px">            
                         {{ this.recipe.Recipe.AverageRecipeRating }} / 5 
                 </span>
