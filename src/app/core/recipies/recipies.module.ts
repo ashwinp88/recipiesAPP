@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -39,6 +40,9 @@ import { EditUnitOfMeasureComponent } from './my-recipies/adminFunctions/edit-un
 import { IngredientService } from './services/ingredient.service';
 import { UnitOfMeasurementService } from './services/unit-of-measurement.service';
 import { RecipeStepDisplayComponent } from './recipe-step-display/recipe-step-display.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { RecipeDetailItemComponent } from './recipe-detail-item/recipe-detail-item.component';
+import { RecipeCommentsComponent } from './recipe-comments/recipe-comments.component';
 // import { RecipeIngredientTryComponent } from './recipe-ingredient-try/recipe-ingredient-try.component';
 
 @NgModule({
@@ -55,7 +59,9 @@ import { RecipeStepDisplayComponent } from './recipe-step-display/recipe-step-di
     AddUnitOfMeasureComponent,
     EditIngredientComponent,
     EditUnitOfMeasureComponent,
-    RecipeStepDisplayComponent],
+    RecipeStepDisplayComponent,
+    RecipeDetailItemComponent,
+    RecipeCommentsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -78,7 +84,9 @@ import { RecipeStepDisplayComponent } from './recipe-step-display/recipe-step-di
     MatListModule,
     MatExpansionModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    MatBadgeModule,
+    MatTooltipModule
   ],
   providers: [IngredientService, UnitOfMeasurementService]
 })

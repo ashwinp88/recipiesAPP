@@ -1,12 +1,32 @@
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let recipe of this.recipeList">       
-          <mat-expansion-panel-header>              
-                <strong class="w-75 h-100 align-self-center">{{ this.recipe.Recipe.Title }}</strong>
-                <span class="w-25 h-100 text-right align-self-center">by {{ this.recipe.Recipe.CreatedByUser }}</span>
-                <span class="badge badge-secondary float-right px-1 m-2" style="width:50px">            
-                        {{ this.recipe.Recipe.AverageRecipeRating }} / 5 
-                </span>
-          </mat-expansion-panel-header>
-          <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
-    </mat-expansion-panel>
+      <mat-expansion-panel *ngFor="let recipe of this.recipeList">
+            <mat-expansion-panel-header collapsedHeight="110px" expandedHeight="110px">
+                  <div class="d-flex flex-row w-100">
+                        <img class="img-fluid align-self-center" style="width:110px" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation"
+                              [src]="this.recipe.RecipeImage.ImageLocation">
+                        <div class="mx-2 d-flex flex-column w-75">
+                              <strong>{{ this.recipe.Recipe.Title }}</strong>
+                              <!-- <span class="badge badge-secondary" style="width:50px">
+                                    {{ this.recipe.Recipe.AverageRecipeRating }} / 5
+                              </span> -->
+                              <div class="d-flex flex-column-reverse h-100">
+                                    <div class="d-flex flex-row">
+                                          <a class="btn btn-sm btn-outline-dark" (click)="this.onAnchorClick($event)" [routerLink]="['/recipes',this.recipe.Recipe.ID]">
+                                                <span>
+                                                      <fa-icon [icon]="faHeart"></fa-icon> 11
+                                                </span> &nbsp;
+                                                <span>
+                                                      <fa-icon [icon]="faComment"></fa-icon> 15
+                                                </span>
+                                          </a>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="w-25 text-right">
+                              by {{ this.recipe.Recipe.CreatedByUser }}
+                        </div>
+                  </div>
+            </mat-expansion-panel-header>
+            <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
+      </mat-expansion-panel>
 </mat-accordion>

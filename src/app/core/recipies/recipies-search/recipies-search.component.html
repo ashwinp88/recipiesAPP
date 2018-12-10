@@ -1,9 +1,9 @@
-<div *ngIf="this.recipeList.length == 0;else search" class="text-center text-white">
-    <div style="height:300px"></div>
-    Start by typing something in the search field.
+<div *ngIf="this.recipeList.length == 0;else search" class="h-100 w-100 text-center">    
+    <div class="h-25"></div>
+    <p>Start by typing something in the search field.</p>
 </div>
 <ng-template #search>
-    <div class="my-3 rounded bg-white">
+    <div class="my-3 rounded">
         <app-recipie-list [recipeList]="this.recipeList"></app-recipie-list>
     </div>
 </ng-template>

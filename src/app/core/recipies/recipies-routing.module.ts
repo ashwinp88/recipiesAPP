@@ -7,6 +7,7 @@ import { AuthGuard } from 'src/app/shared/auth.guard';
 import { MyRecipiesComponent } from './my-recipies/my-recipies.component';
 import { AddIngredientComponent } from './my-recipies/adminFunctions/add-ingredient/add-ingredient.component';
 import { AddUnitOfMeasureComponent } from './my-recipies/adminFunctions/add-unit-of-measure/add-unit-of-measure.component';
+import { RecipeDetailItemComponent } from './recipe-detail-item/recipe-detail-item.component';
 
 const routes: Routes = [
   { path: 'recipes', component: RecipiesComponent, children: [
@@ -22,7 +23,8 @@ const routes: Routes = [
       { path: 'addUnitsOfMeasure', component: AddUnitOfMeasureComponent }
       // I don't know why child routes are not working
     ] } */
-  ]}
+  ]},
+  { path: 'recipes/:id', component: RecipeDetailItemComponent }
 ];
 
 @NgModule({

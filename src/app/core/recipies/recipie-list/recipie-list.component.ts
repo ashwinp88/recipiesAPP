@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { RecipeSearchResult } from '../models/recipe.model';
+import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-recipie-list',
@@ -9,6 +10,8 @@ import { RecipeSearchResult } from '../models/recipe.model';
 export class RecipieListComponent implements OnInit {
   @Input() recipeList: RecipeSearchResult[];
   briefDescMaxChars = 30;
+  faHeart = faHeart;
+  faComment = faComment;
   constructor() { }
 
   ngOnInit() {
@@ -36,5 +39,9 @@ export class RecipieListComponent implements OnInit {
     if (window.innerWidth > 1200) {
       this.briefDescMaxChars = 130;
     }
+  }
+
+  onAnchorClick(event: any) {
+    event.stopPropagation();
   }
 }

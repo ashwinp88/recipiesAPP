@@ -33,7 +33,8 @@ export class RecipiesSearchComponent implements OnInit {
                   return { Recipe: res.Recipe, ImageLocation: res.RecipeImage ? res.RecipeImage.ImageLocation : '' };
                 }
               ); */
-            }
+            },
+            () => this.closeLoading()
           );
           this.showLoading();
         }

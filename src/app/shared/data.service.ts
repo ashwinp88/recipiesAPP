@@ -4,18 +4,12 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { AuthService } from './auth-service.service';
 import { IngredientModel } from '../core/recipies/models/ingredient.model';
 import { UnitOfMeasurementModel } from '../core/recipies/models/unit-of-measurement.model';
-import { CreateRecipeModel } from '../core/recipies/models/recipe.model';
+import { CreateRecipeModel, RecipeComment } from '../core/recipies/models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
-  private httpHeader: HttpHeaders = new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.authService.authToken}`
-    }
-  );
+export class DataService { 
 
   constructor(private authService: AuthService, private httpClient: HttpClient) { }
 
@@ -29,12 +23,12 @@ export class DataService {
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
-    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
+    return this.httpClient.get(url, { observe: 'response', params: httpParameters });
   }
 
   getIngredientsNoPaging() {
     const url = `${this.authService.APIUrl}/api/Ingredients/`;
-    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
+    return this.httpClient.get(url, { observe: 'response' });
   }
 
   getIngredientsByName(ingredient: string, pageSize: string, pageNumber: string) {
@@ -42,22 +36,40 @@ export class DataService {
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
-    return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
+    return this.httpClient.get(url, { observe: 'response', params: httpParameters });
   }
 
   editIngredient(ingredient: IngredientModel) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
     const url = `${this.authService.APIUrl}/api/Ingredients/${ingredient.ID}`;
-    return this.httpClient.put(url, ingredient, { headers: this.httpHeader });
+    return this.httpClient.put(url, ingredient, { headers: httpHeader });
   }
 
   deleteIngredient(id: number) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
     const url = `${this.authService.APIUrl}/api/Ingredients/${id}`;
-    return this.httpClient.delete(url, { headers: this.httpHeader });
+    return this.httpClient.delete(url, { headers: httpHeader });
   }
 
   addUOM(description: string, abbreviation: string) {
     const postBody = { 'Description': description, 'Abbreviation': abbreviation };
-    return this.httpClient.post(this.authService.APIUrl + '/api/UnitsOfMeasure', postBody, { headers: this.httpHeader });
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    return this.httpClient.post(this.authService.APIUrl + '/api/UnitsOfMeasure', postBody, { headers: httpHeader });
   }
 
   getAllUOM(pageSize: string, pageNumber: string) {
@@ -65,12 +77,12 @@ export class DataService {
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
-    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response', params: httpParameters });
+    return this.httpClient.get(url, { observe: 'response', params: httpParameters });
   }
 
   getAllUOMNoPaging() {
     const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/`;
-    return this.httpClient.get(url, { headers: this.httpHeader, observe: 'response' });
+    return this.httpClient.get(url, { observe: 'response' });
   }
 
   getUOMByName(name: string, pageSize: string, pageNumber: string) {
@@ -78,26 +90,64 @@ export class DataService {
     const httpParameters: HttpParams = new HttpParams().set(
       'pageSize', pageSize).set(
       'pageNumber', pageNumber);
-    return this.httpClient.get(url, { headers: this.httpHeader,  observe: 'response', params: httpParameters });
+    return this.httpClient.get(url, { observe: 'response', params: httpParameters });
   }
 
   editUOM(unitOfMEasurement: UnitOfMeasurementModel) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
     const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/${unitOfMEasurement.ID}`;
-    return this.httpClient.put(url, unitOfMEasurement, { headers: this.httpHeader });
+    return this.httpClient.put(url, unitOfMEasurement, { headers: httpHeader });
   }
 
   deleteUOM(id: number) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
     const url = `${this.authService.APIUrl}/api/UnitsOfMeasure/${id}`;
-    return this.httpClient.delete(url, { headers: this.httpHeader });
+    return this.httpClient.delete(url, { headers: httpHeader });
   }
 
   addRecipe(recipe: CreateRecipeModel) {
-    return this.httpClient.post(this.authService.APIUrl + '/api/Recipes', recipe, {headers: this.httpHeader});
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    return this.httpClient.post(this.authService.APIUrl + '/api/Recipes', recipe, {headers: httpHeader});
   }
 
   searchRecipesByTitle(searchQ: string) {
     const httpParameters: HttpParams = new HttpParams().set(
       'title', searchQ);
-    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Search', {headers: this.httpHeader, params: httpParameters});
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Search', { params: httpParameters });
+  }
+
+  getRecipeByID(id: number) {
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/' + id);
+  }
+
+  getRecipeComments(recipeId: number) {
+    const httpParameters: HttpParams = new HttpParams().set(
+      'recipeID', recipeId.toString());
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Comments', { params: httpParameters });
+  }
+
+  postRecipeComment(comment: RecipeComment) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    return this.httpClient.post(this.authService.APIUrl + '/api/Recipes/Comments', comment, { headers: httpHeader });
   }
 }

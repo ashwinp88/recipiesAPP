@@ -2,6 +2,7 @@ import { IngredientModel } from './ingredient.model';
 import { UnitOfMeasurementModel } from './unit-of-measurement.model';
 
 export class RecipeModel {
+    public ID: number;
     constructor(
         public Title: string,
         public Description: string,
@@ -60,5 +61,11 @@ export class RecipeSearchResult {
         public RecipeDirections: RecipeStep[],
         public RecipeIngredients: RecipeIngredient[]
     ) {}
+}
 
+export class RecipeComment {
+    public userName: string;
+    public commentedOn: Date;
+    public comment: string;
+    public recipeID: number;
 }

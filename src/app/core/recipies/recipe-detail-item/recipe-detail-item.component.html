@@ -1,0 +1,11 @@
+<div *ngIf="this.recipe && this.recipe.Recipe" class="container mb-4 mt-2">
+    <div *ngIf="this.authService.isAuthorized" class="float-right">
+        <fa-icon
+         matTooltip="like this recipe"
+         [icon]="faCurHeart" [ngStyle]="{'color':this.faCurHeart === faSolidHeart ? 'red' : 'black' }"  size="3x" (click)="this.toggleHeartColor()"></fa-icon>
+    </div>
+    <app-recipie-detail  [recipe]="this.recipe"></app-recipie-detail>
+    <hr>
+    <app-recipe-comments [recipeID]="this.recipe.Recipe.ID" [comments]="this.recipeComments$ | async"></app-recipe-comments>
+</div>
+

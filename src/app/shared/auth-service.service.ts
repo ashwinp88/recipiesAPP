@@ -6,9 +6,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class AuthService {
   authToken = '';
-  // public APIUrl = 'http://localhost:59797';
+  public APIUrl = 'http://localhost:59797';
   // private APIUrl = 'http://recipesapi.gearhostpreview.com/recipesAPI';
-  public APIUrl = 'http://recipesapi-env.w5aa2v8pme.us-east-2.elasticbeanstalk.com';
+  // public APIUrl = 'http://recipesapi-env.w5aa2v8pme.us-east-2.elasticbeanstalk.com';
   public isAuthorized = false;
   public uName: string;
   public uID: string;
