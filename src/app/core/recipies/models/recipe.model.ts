@@ -54,8 +54,8 @@ export class CreateRecipeModel {
 
 export class RecipeSearchResult {
     constructor(
-        public UserRecipeBookMarks: any[],
-        public UserRecipeRatings: any[],
+        public UserRecipeBookMarks: number,
+        public UserRecipeComments: number,
         public Recipe: RecipeModel,
         public RecipeImage: RecipeImageModel,
         public RecipeDirections: RecipeStep[],

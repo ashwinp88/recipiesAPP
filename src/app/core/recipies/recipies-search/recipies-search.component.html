@@ -1,8 +1,17 @@
-<div *ngIf="this.recipeList.length == 0;else search" class="h-100 w-100 text-center">    
-    <div class="h-25"></div>
-    <p>Start by typing something in the search field.</p>
+<div *ngIf="this.recipeList.length == 0;else search" class="h-100 w-100">    
+    <!-- <div class="h-25"></div>
+    <p>Start by typing something in the search field.</p> -->
+    <br>
+    Recently added recipes
+    <hr>
+    <div class="my-3 rounded">
+            <app-recipie-list [recipeList]="this.recentRecipeList"></app-recipie-list>
+        </div>
 </div>
 <ng-template #search>
+    <br>
+    Search results
+    <hr>
     <div class="my-3 rounded">
         <app-recipie-list [recipeList]="this.recipeList"></app-recipie-list>
     </div>

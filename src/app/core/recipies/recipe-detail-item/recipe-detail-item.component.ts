@@ -3,8 +3,6 @@ import { RecipeSearchResult, RecipeComment } from '../models/recipe.model';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/shared/data.service';
 import { AuthService } from 'src/app/shared/auth-service.service';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,12 +12,9 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./recipe-detail-item.component.css']
 })
 export class RecipeDetailItemComponent implements OnInit {
-  faHeart = faHeart;
-  faSolidHeart = faSolidHeart;
-  faCurHeart = faHeart;
   recipe: RecipeSearchResult;
   recipeComments$: Observable<RecipeComment[]>;
-  constructor(private activeRoute: ActivatedRoute, private dataService: DataService, public authService: AuthService) { }
+  constructor(private activeRoute: ActivatedRoute, private dataService: DataService) { }
 
   ngOnInit() {
     this.recipe = new RecipeSearchResult(null, null, null, null, null, null);
@@ -37,13 +32,5 @@ export class RecipeDetailItemComponent implements OnInit {
         }
       }
     );
-  }
-
-  toggleHeartColor() {
-    if (this.faCurHeart === faHeart) {
-      this.faCurHeart = faSolidHeart;
-    } else {
-      this.faCurHeart = faHeart;
-    }
   }
 }

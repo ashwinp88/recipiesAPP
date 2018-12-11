@@ -6,17 +6,17 @@
                               [src]="this.recipe.RecipeImage.ImageLocation">
                         <div class="mx-2 d-flex flex-column w-75">
                               <strong>{{ this.recipe.Recipe.Title }}</strong>
-                              <!-- <span class="badge badge-secondary" style="width:50px">
-                                    {{ this.recipe.Recipe.AverageRecipeRating }} / 5
-                              </span> -->
                               <div class="d-flex flex-column-reverse h-100">
                                     <div class="d-flex flex-row">
-                                          <a class="btn btn-sm btn-outline-dark" (click)="this.onAnchorClick($event)" [routerLink]="['/recipes',this.recipe.Recipe.ID]">
+                                          <a class="btn btn-sm btn-outline-dark" (click)="this.onAnchorClick($event)"
+                                                [routerLink]="['/recipes',this.recipe.Recipe.ID]">
                                                 <span>
-                                                      <fa-icon [icon]="faHeart"></fa-icon> 11
+                                                      <fa-icon [icon]="faHeart"></fa-icon> {{
+                                                      this.recipe.UserRecipeBookMarks }}
                                                 </span> &nbsp;
                                                 <span>
-                                                      <fa-icon [icon]="faComment"></fa-icon> 15
+                                                      <fa-icon [icon]="faComment"></fa-icon> {{
+                                                      this.recipe.UserRecipeComments }}
                                                 </span>
                                           </a>
                                     </div>
@@ -27,6 +27,8 @@
                         </div>
                   </div>
             </mat-expansion-panel-header>
-            <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
+            <ng-template matExpansionPanelContent>
+                  <app-recipie-detail [recipe]="this.recipe"></app-recipie-detail>
+            </ng-template>
       </mat-expansion-panel>
 </mat-accordion>

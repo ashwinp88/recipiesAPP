@@ -13,6 +13,7 @@ import { LoadingScreenComponent } from '../../loading-screen/loading-screen.comp
 export class RecipiesSearchComponent implements OnInit {
 
   recipeList: RecipeSearchResult[];
+  recentRecipeList: RecipeSearchResult[];
   loadingRef: MatDialogRef<any>;
 
   constructor(private activeRoute: ActivatedRoute, private dataService: DataService, private dialog: MatDialog) {
@@ -27,14 +28,19 @@ export class RecipiesSearchComponent implements OnInit {
             (results: RecipeSearchResult[]) => {
               this.recipeList = results;
               this.closeLoading();
-              // console.log(results);
-              /* this.recipeList = results.map(
-                res => {
-                  return { Recipe: res.Recipe, ImageLocation: res.RecipeImage ? res.RecipeImage.ImageLocation : '' };
-                }
-              ); */
             },
             () => this.closeLoading()
+          );
+          this.showLoading();
+        } else {
+          this.dataService.getRecentlyAddedRecipes().subscribe(
+            (res: RecipeSearchResult[]) => {
+              this.closeLoading();
+              this.recentRecipeList = res;
+            },
+            () => {
+              this.closeLoading();
+            }
           );
           this.showLoading();
         }

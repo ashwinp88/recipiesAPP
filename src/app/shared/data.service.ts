@@ -9,13 +9,18 @@ import { CreateRecipeModel, RecipeComment } from '../core/recipies/models/recipe
 @Injectable({
   providedIn: 'root'
 })
-export class DataService { 
+export class DataService {
 
   constructor(private authService: AuthService, private httpClient: HttpClient) { }
 
   addIngredient(ingredient: string) {
     const postBody = { 'Description': ingredient };
-    return this.httpClient.post(this.authService.APIUrl + '/api/Ingredients', postBody, { headers: this.httpHeader });
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      });
+    return this.httpClient.post(this.authService.APIUrl + '/api/Ingredients', postBody, { headers: httpHeader });
   }
 
   getAllIngredients(pageSize: string, pageNumber: string) {
@@ -150,4 +155,40 @@ export class DataService {
     );
     return this.httpClient.post(this.authService.APIUrl + '/api/Recipes/Comments', comment, { headers: httpHeader });
   }
+
+  isUserRecipeBookMarked(recipeID: number, uid: string) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    const httpParameters: HttpParams = new HttpParams().set(
+      'recipeID', recipeID.toString()).set(
+        'uid', uid);
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Bookmark', { headers: httpHeader, params: httpParameters });
+  }
+
+  toggleRecipeBookmark(recipeID: number, uid: string) {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.authService.authToken}`
+      }
+    );
+    const httpParameters: HttpParams = new HttpParams().set(
+      'recipeID', recipeID.toString()).set(
+        'uid', uid);
+    return this.httpClient.post(this.authService.APIUrl + '/api/Recipes/Bookmark', null, { headers: httpHeader, params: httpParameters });
+  }
+
+  getRecentlyAddedRecipes() {
+    const httpHeader: HttpHeaders = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+      }
+    );
+    return this.httpClient.get(this.authService.APIUrl + '/api/Recipes/Recent', { headers: httpHeader });
+  }
+
 }
