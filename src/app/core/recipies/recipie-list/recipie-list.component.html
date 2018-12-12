@@ -1,6 +1,6 @@
 <mat-accordion>
       <mat-expansion-panel *ngFor="let recipe of this.recipeList">
-            <mat-expansion-panel-header collapsedHeight="110px" expandedHeight="110px">
+            <mat-expansion-panel-header collapsedHeight="130px" expandedHeight="130px">
                   <div class="d-flex flex-row w-100">
                         <img class="img-fluid align-self-center" style="width:110px" 
                               *ngIf="this.imageExists(this.recipe)"
@@ -24,7 +24,7 @@
                               </div>
                         </div>
                         <div class="w-25 text-right">
-                              by {{ this.recipe.Recipe.CreatedByUser }}
+                             <small>by {{ this.recipe.Recipe.CreatedByUser }}</small> 
                         </div>
                   </div>
             </mat-expansion-panel-header>
