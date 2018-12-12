@@ -38,7 +38,7 @@ export function getErrorForControl(ctrl: string, signupForm: FormControl): strin
 }
 
 export function isValidPassword(control: FormControl): {[s: string]: boolean} {
-    const specialCharPatt = /[!-/]/g;
+    const specialCharPatt = /\W/g;
     const numericCharPatt = /[0-9]/g;
     const whiteSpacePatt = /\s/g;
     const upperCasePatt = /[A-Z]/g;
