@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { LoadingScreenComponent } from '../../loading-screen/loading-screen.component';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { Router } from '@angular/router';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 @Component({
   selector: 'app-recipie-create',
@@ -25,6 +26,7 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
   faCamera = faCamera;
   recipe: RecipeModel;
   imageLocation: string;
+  imageBlob: string;
   linear = true;
   recipeForm: FormGroup;
   ingredientsForm: FormGroup;
@@ -45,12 +47,14 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dataService: DataService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private ng2ImgMax: Ng2ImgMaxService
     ) {
   }
 
   ngOnInit() {
     this.imageLocation = '';
+    this.imageBlob = '';
     this.recipeForm = new FormGroup (
       {
         'title': new FormControl('', Validators.required),
@@ -59,7 +63,10 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
       }
     );
     this.recipeForm.controls['img'].valueChanges.subscribe(
-      (value: string) => this.imageLocation = value
+      (value: string) => {
+        this.imageBlob = '';
+        this.imageLocation = value;
+      }
     );
     this.ingredientsForm = new FormGroup (
       {
@@ -110,7 +117,6 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
   }
 
   onStep2Submit() {
-    // console.log(this.ingredientsForm);
   }
 
   onAddIngredient() {
@@ -136,15 +142,13 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
   }
 
   createRecipe() {
-    // console.log(this.ingredientsForm);
-    // console.log(this.stepsForm);
     if (this.recipeForm.valid && this.ingredientsForm.valid && this.stepsForm.valid) {
       const recipe = new RecipeModel(
         this.recipeForm.controls['title'].value,
         this.recipeForm.controls['description'].value,
         this.authService.uID,
         true);
-      const recipeImage = new RecipeImageModel(0, 1, 0, this.imageLocation);
+      const recipeImage = new RecipeImageModel(0, 1, 0, this.imageLocation, this.imageBlob);
       const recipeIngredients = this.ingredientsForm.controls['children'].value;
       const recipeStep = this.stepsForm.controls['children'].value;
       const createRecipe = new CreateRecipeModel(recipe, recipeImage, recipeIngredients, recipeStep);
@@ -165,11 +169,11 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
     this.loadingRef.close();
   }
 
-  openErrorModal() {
+  openErrorModal(title?: string, body?: string) {
     this.closeLoading();
     this.dialog.open( DialogComponent, { data: {
-      Title: 'Error saving your awesome recipe',
-      Body: 'Something went wrong. Please try again in a moment.',
+      Title: title ? title : 'Error saving your awesome recipe',
+      Body: body ? body : 'Something went wrong. Please try again in a moment.',
       OkBtnCaption: 'OK',
       CancelBtnCaption: 'Cancel',
       CancelBtnVisible : false
@@ -189,5 +193,26 @@ export class RecipieCreateComponent implements OnInit, OnDestroy {
       () => this.router.navigate(['/recipes']),
       () => this.router.navigate(['/recipes'])
     );
+  }
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.ng2ImgMax.resizeImage(event.target.files[0], 500, 500).subscribe(
+        (res) => {
+          this.closeLoading();
+          const reader = new FileReader();
+          reader.readAsDataURL(res);
+          reader.onload = (r: any) => {
+            this.recipeForm.controls['img'].setValue('');
+            this.imageBlob = r.target.result;
+          };
+        },
+        (err) => {
+          this.closeLoading();
+          this.openErrorModal('Error!', 'There was an issue with the selected image. Please try again.');
+        }
+      );
+      this.showLoading();
+    }
   }
 }

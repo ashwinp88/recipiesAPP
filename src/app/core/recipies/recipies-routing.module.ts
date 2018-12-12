@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'search', component: RecipiesSearchComponent },
     { path: 'search/:q', component: RecipiesSearchComponent },
-    { path: 'new', canActivate: [AuthGuard], component: RecipieCreateComponent },
+    { path: 'new', component: RecipieCreateComponent },
     { path: 'myRecipes', canActivate: [AuthGuard], component: MyRecipiesComponent },
     { path: 'myRecipes/addIngredient', canActivate: [AuthGuard], component: AddIngredientComponent },
     { path: 'myRecipes/addUnitsOfMeasure', canActivate: [AuthGuard], component: AddUnitOfMeasureComponent }
@@ -26,6 +26,8 @@ const routes: Routes = [
   ]},
   { path: 'recipes/:id', component: RecipeDetailItemComponent }
 ];
+
+/* { path: 'new', canActivate: [AuthGuard], component: RecipieCreateComponent }, */
 
 @NgModule({
   declarations: [],

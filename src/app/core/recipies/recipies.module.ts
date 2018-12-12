@@ -23,6 +23,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { RecipeIngredientComponent } from './recipe-ingredient/recipe-ingredient.component';
 import { RecipieStepComponent } from './recipie-step/recipie-step.component';
@@ -86,7 +87,8 @@ import { RecipeCommentsComponent } from './recipe-comments/recipe-comments.compo
     MatTableModule,
     MatChipsModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    Ng2ImgMaxModule
   ],
   providers: [IngredientService, UnitOfMeasurementService]
 })

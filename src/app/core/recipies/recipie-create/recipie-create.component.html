@@ -1,4 +1,4 @@
-<div class="bg-white rounded my-5 py-3">
+<div class="bg-white rounded mb-5 py-3">
     <mat-vertical-stepper [linear]="this.linear" (selectionChange)="this.onStepperChange($event)">
         <mat-step [stepControl]="recipeForm">
             <form [formGroup]="recipeForm">
@@ -9,23 +9,32 @@
                     </h2>
                 </mat-form-field>
                 <mat-form-field class="w-100">
-                    <textarea 
-                        matInput 
-                        formControlName="description"
-                        placeholder="A brief description of the recipe"
+                    <textarea matInput formControlName="description" placeholder="A brief description of the recipe"
                         required>
                     </textarea>
                 </mat-form-field>
-                <img *ngIf="this.imageLocation != ''" class="img-thumbnail" [src]="this.imageLocation" style="max-height:300px">              
+                <img *ngIf="this.imageLocation != '' || this.imageBlob" class="img-thumbnail" 
+                    [src]="this.imageLocation == '' ? this.imageBlob : this.imageLocation" 
+                    style="max-height:300px">
+                <div class="d-flex my-2">
+                        <button class="btn btn-outline-dark" (click)="imgInput.click()">
+                                <span>
+                                    choose an image 
+                                </span>
+                                    &nbsp;
+                                <fa-icon  [icon]="faCamera" size="lg"></fa-icon>
+                            </button>
+                            <input hidden type="file" placeholder="url for the recipe's main image" accept="image/*" name="imageloc" (input)="this.onSelectFile($event)"
+                    autocomplete="off" #imgInput>
+                </div>               
+                <div class="d-flex m-2">
+                    <span class="text-secondary"> or </span>
+                </div>                
                 <div class="d-flex">
                     <mat-form-field class="w-100 mr-3">
-                            <input type="url" matInput placeholder="url for the recipe's main image" formControlName="img" name="imageloc"
-                                autocomplete="off">
+                        <input type="url" matInput placeholder="url for the recipe's main image" formControlName="img"
+                            name="imageloc" autocomplete="off">
                     </mat-form-field>
-                    <!-- <button class="m-3" mat-raised-button color="primary" type="button" (click)="imgInput.click()"></button> -->
-                    <a (click)="imgInput.click()"><fa-icon [icon]="faCamera" size="2x"></fa-icon></a>
-                    <input hidden type="file" placeholder="url for the recipe's main image" formControlName="img" accept="image/*" name="imageloc"
-                        autocomplete="off" #imgInput>
                 </div>
                 <button mat-button type="submit" matStepperNext class="float-right">Choose ingredients
                     <fa-icon [icon]="faArrowRight"></fa-icon>
@@ -35,37 +44,27 @@
         <mat-step [stepControl]="ingredientsForm">
             <form [formGroup]="ingredientsForm">
                 <ng-template matStepLabel>Ingredients</ng-template>
-               <!--  <app-recipie-ingredient 
-                    *ngFor="let i of this.ingredients"
-                    [ingredientDeleted]="this.ingredientDeleted"
-                    [recipeIngredient]="i">
-                </app-recipie-ingredient> -->
-               
                 <div formArrayName="children">
-                    <app-recipe-ingredient                        
-                        *ngFor="let child of this.ingredientsFormArray.controls; let i = index"
-                        [ingredientDeleted] = "this.ingredientDeleted"
-                        [formControlName]="i">
+                    <app-recipe-ingredient *ngFor="let child of this.ingredientsFormArray.controls; let i = index"
+                        [ingredientDeleted]="this.ingredientDeleted" [formControlName]="i">
                     </app-recipe-ingredient>
                     <button mat-button (click)="this.onAddIngredient()" type="button" class="m-1">
                         <fa-icon [icon]="faPlus"></fa-icon>
-                        &nbsp;Add ingredient</button>
-                    <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved &nbsp;
-                         <fa-icon [icon]="faArrowRight"></fa-icon>
+                        &nbsp;Add ingredient
+                    </button>
+                    <button mat-button type="submit" matStepperNext class="float-right m-1">Describe steps involved
+                        &nbsp;
+                        <fa-icon [icon]="faArrowRight"></fa-icon>
                     </button>
                 </div>
-                
-               
             </form>
         </mat-step>
         <mat-step [stepControl]="stepsForm">
             <form [formGroup]="stepsForm" (ngSubmit)="this.createRecipe()">
                 <ng-template matStepLabel>Steps</ng-template>
                 <div formArrayName="children">
-                    <app-recipie-step
-                    *ngFor="let child of this.stepsFormArray.controls; let i = index"
-                    [stepDeleted]="this.stepDeleted"
-                    [formControlName]="i">                        
+                    <app-recipie-step *ngFor="let child of this.stepsFormArray.controls; let i = index" [stepDeleted]="this.stepDeleted"
+                        [formControlName]="i">
                     </app-recipie-step>
                     <button mat-button type="button" class="m-1" (click)="this.onAddStep()">
                         <fa-icon [icon]="faPlus"></fa-icon>
@@ -73,7 +72,7 @@
                     </button>
                     <button mat-button type="submit" matStepperNext class="float-right m-1">Contribute recipe &nbsp;
                         <fa-icon [icon]="faSave"></fa-icon>
-                    </button>        
+                    </button>
                 </div>
             </form>
         </mat-step>

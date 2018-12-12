@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { RecipeSearchResult } from '../models/recipe.model';
+import { RecipeSearchResult, ImageFunctions } from '../models/recipe.model';
 import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -43,5 +43,15 @@ export class RecipieListComponent implements OnInit {
 
   onAnchorClick(event: any) {
     event.stopPropagation();
+  }
+
+  imageExists(recipe: RecipeSearchResult): boolean {
+    const imgFunctions = new ImageFunctions(recipe);
+    return imgFunctions.imageExists();
+  }
+
+  getImageSrc(recipe: RecipeSearchResult): string {
+    const imgFunctions = new ImageFunctions(recipe);
+    return imgFunctions.getImageSrc();
   }
 }

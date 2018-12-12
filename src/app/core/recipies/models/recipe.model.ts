@@ -39,7 +39,8 @@ export class RecipeImageModel {
         public ImageType: number,
         public seq: number,
         public ImageApplyID: number,
-        public ImageLocation: string
+        public ImageLocation: string,
+        public ImageBlob: string
     ) {}
 }
 
@@ -69,3 +70,29 @@ export class RecipeComment {
     public comment: string;
     public recipeID: number;
 }
+
+export class ImageFunctions {
+    constructor (public recipe: RecipeSearchResult) {}
+
+    getImageSrc(): string {
+        let ret = '';
+        if (this.imageExists()) {
+            if (this.recipe.RecipeImage.ImageBlob) {
+                ret = `data:image/JPEG;base64,${this.recipe.RecipeImage.ImageBlob}`;
+            }
+            if (this.recipe.RecipeImage.ImageLocation !== '') {
+                ret = this.recipe.RecipeImage.ImageLocation;
+            }
+        }
+        return ret;
+    }
+
+    imageExists(): boolean {
+        if (this.recipe.RecipeImage && (this.recipe.RecipeImage.ImageLocation !== '' || this.recipe.RecipeImage.ImageBlob)
+        ) {
+            return true;
+        }
+        return false;
+    }
+}
+

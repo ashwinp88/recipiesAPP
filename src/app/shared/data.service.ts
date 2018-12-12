@@ -127,6 +127,11 @@ export class DataService {
         'Authorization': `Bearer ${this.authService.authToken}`
       }
     );
+    // pattern to replace before sending image data to Web API
+    const base64PrefixPatt = /^data:\w{1,}\/\w{1,}\;base64,/g;
+    if (recipe.RecipeImage_ && recipe.RecipeImage_.ImageBlob) {
+      recipe.RecipeImage_.ImageBlob = recipe.RecipeImage_.ImageBlob.replace(base64PrefixPatt, '');
+    }
     return this.httpClient.post(this.authService.APIUrl + '/api/Recipes', recipe, {headers: httpHeader});
   }
 

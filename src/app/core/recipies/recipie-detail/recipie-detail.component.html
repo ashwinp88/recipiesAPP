@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <img class="rounded w-100" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation" [src]="this.recipe.RecipeImage.ImageLocation">
+        <img class="rounded w-100" *ngIf="this.imgfunctions.imageExists()" [src]="this.imgfunctions.getImageSrc()">
     </div>
     <div class="col-md-6 align-self-center">
         <h5 class="m-1">{{this.recipe.Recipe.Description}}</h5>

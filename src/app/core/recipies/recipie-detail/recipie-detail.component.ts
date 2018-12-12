@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RecipeSearchResult } from '../models/recipe.model';
+import { RecipeSearchResult, ImageFunctions } from '../models/recipe.model';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/shared/auth-service.service';
@@ -18,10 +18,12 @@ export class RecipieDetailComponent implements OnInit {
   faHeart = faHeart;
   faSolidHeart = faSolidHeart;
   isRecipeBookmarked = false;
+  imgfunctions: ImageFunctions;
 
   constructor(public authService: AuthService, private dataService: DataService) { }
 
   ngOnInit() {
+    this.imgfunctions = new ImageFunctions(this.recipe);
     if (this.authService.isAuthorized) {
       this.dataService.isUserRecipeBookMarked(this.recipe.Recipe.ID, this.authService.uID).subscribe(
         (val: boolean) => this.isRecipeBookmarked = val

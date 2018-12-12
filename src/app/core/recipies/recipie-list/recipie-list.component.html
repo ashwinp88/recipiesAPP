@@ -2,8 +2,9 @@
       <mat-expansion-panel *ngFor="let recipe of this.recipeList">
             <mat-expansion-panel-header collapsedHeight="110px" expandedHeight="110px">
                   <div class="d-flex flex-row w-100">
-                        <img class="img-fluid align-self-center" style="width:110px" *ngIf="this.recipe.RecipeImage && this.recipe.RecipeImage.ImageLocation"
-                              [src]="this.recipe.RecipeImage.ImageLocation">
+                        <img class="img-fluid align-self-center" style="width:110px" 
+                              *ngIf="this.imageExists(this.recipe)"
+                              [src]="this.getImageSrc(this.recipe)">
                         <div class="mx-2 d-flex flex-column w-75">
                               <strong>{{ this.recipe.Recipe.Title }}</strong>
                               <div class="d-flex flex-column-reverse h-100">
